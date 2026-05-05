@@ -1,0 +1,1481 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Propuesta · iapymeconsultores</title>
+<meta name="description" content="Propuesta comercial de iapymeconsultores: webs que venden para PyMEs." />
+<link rel="canonical" href="https://iapymeconsultores.com/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Geist', 'ui-sans-serif', 'system-ui'],
+          serif: ['"Instrument Serif"', 'ui-serif', 'Georgia'],
+          mono: ['"JetBrains Mono"', 'ui-monospace'],
+        },
+        colors: {
+          ink: {
+            950: '#070D1F',
+            900: '#0A1530',
+            800: '#0F1F44',
+            700: '#16295A',
+            600: '#26407A',
+          },
+          paper: {
+            50:  '#FAFAF7',
+            100: '#F4F3EE',
+            200: '#E8E6DD',
+            300: '#D6D3C7',
+            400: '#A8A496',
+          },
+          esmeralda: {
+            400: '#34D399',
+            500: '#10B981',
+            600: '#059669',
+            700: '#047857',
+          },
+          terracota: '#E97451',
+        },
+        boxShadow: {
+          'soft': '0 1px 2px rgba(10,21,48,.04), 0 8px 24px -12px rgba(10,21,48,.12)',
+          'lift': '0 2px 4px rgba(10,21,48,.06), 0 24px 48px -16px rgba(10,21,48,.18)',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #FAFAF7;
+    color: #0A1530;
+    font-feature-settings: "ss01","ss02","cv01","cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .font-display { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Subtle paper grain */
+  .grain { position: relative; }
+  .grain::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Animated underline for nav links */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 1px; background: currentColor; transition: right .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .nav-link:hover::after { right: 0; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Marquee */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { animation: marquee 38s linear infinite; }
+
+  /* Pulse ring */
+  @keyframes pulseRing {
+    0% { transform: scale(1); opacity: .55; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  .pulse-ring { animation: pulseRing 2.2s ease-out infinite; }
+
+  /* Subtle shimmer on the hero gradient */
+  @keyframes drift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+  .hero-aurora {
+    background:
+      radial-gradient(60% 80% at 12% 18%, rgba(16,185,129,.20), transparent 60%),
+      radial-gradient(50% 70% at 88% 30%, rgba(233,116,81,.16), transparent 60%),
+      radial-gradient(80% 100% at 50% 110%, rgba(38,64,122,.55), transparent 70%),
+      linear-gradient(180deg, #0A1530 0%, #070D1F 100%);
+    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+
+  /* Phone screen scrolling track */
+  .phone-screen::-webkit-scrollbar { display:none }
+  .phone-screen { scrollbar-width: none; }
+
+  /* Number stepper for ROI */
+  input[type="range"].esmeralda {
+    -webkit-appearance: none; appearance: none; height: 4px; background: #E8E6DD; border-radius: 999px;
+  }
+  input[type="range"].esmeralda::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 999px; background: #10B981; border: 3px solid #FAFAF7; box-shadow: 0 2px 8px rgba(16,185,129,.5); cursor: pointer;
+  }
+  input[type="range"].esmeralda::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 999px; background: #10B981; border: 3px solid #FAFAF7; cursor: pointer;
+  }
+
+  /* Marquee gradient mask */
+  .marquee-mask {
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  }
+
+  /* Card hover lift */
+  .lift { transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s; }
+  .lift:hover { transform: translateY(-3px); }
+
+  /* Form */
+  .field { background: #FAFAF7; border: 1px solid #E8E6DD; border-radius: 12px; padding: 14px 16px; width: 100%; transition: border-color .2s, box-shadow .2s; font-size: 16px; }
+  .field:focus { outline: none; border-color: #0F1F44; box-shadow: 0 0 0 4px rgba(15,31,68,.08); }
+
+  /* Stamp */
+  .stamp {
+    border: 1.5px solid currentColor; border-radius: 999px; padding: 4px 12px; font-family: 'JetBrains Mono', ui-monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  }
+
+  /* Marquee dots between brand words */
+  .dot::before { content: "•"; margin: 0 18px; color: #A8A496; }
+
+  /* Subtle dotted bg for sections */
+  .dots-bg {
+    background-image: radial-gradient(rgba(10,21,48,.08) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  /* Drag-friendly tap targets */
+  button, a { -webkit-tap-highlight-color: transparent; }
+
+  /* Phone bezel */
+  .device-bezel {
+    background: linear-gradient(180deg,#1a1a1d,#0a0a0c);
+    border-radius: 44px;
+    padding: 10px;
+    box-shadow:
+      0 0 0 2px #2a2a2e inset,
+      0 30px 60px -20px rgba(7,13,31,.45),
+      0 80px 120px -40px rgba(7,13,31,.35);
+  }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="module">
+  import * as L from "https://esm.sh/lucide-react@0.469.0?deps=react@18.3.1,react-dom@18.3.1";
+  window.Lucide = L;
+  window.dispatchEvent(new Event('lucide-ready'));
+</script>
+</head>
+<body class="antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react">
+
+// ===== parts/icons.jsx =====
+// Lucide icons get loaded as ES module on window.Lucide.
+// We expose a small helper that defers rendering until ready.
+function LIcon({ name, className = "w-5 h-5", strokeWidth = 1.6, ...rest }) {
+  const [ready, setReady] = React.useState(!!window.Lucide);
+  React.useEffect(() => {
+    if (window.Lucide) return;
+    const onReady = () => setReady(true);
+    window.addEventListener('lucide-ready', onReady);
+    return () => window.removeEventListener('lucide-ready', onReady);
+  }, []);
+  if (!ready) return <span className={className} aria-hidden="true" />;
+  const Cmp = window.Lucide[name];
+  if (!Cmp) return <span className={className} />;
+  return <Cmp className={className} strokeWidth={strokeWidth} {...rest} />;
+}
+window.LIcon = LIcon;
+
+// Brand mark — a small original logotype (no copyrighted reuse)
+function BrandMark({ light = false, className = "" }) {
+  const fg = light ? "#FAFAF7" : "#0A1530";
+  const accent = "#10B981";
+  return (
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="32" height="32" rx="9" stroke={fg} strokeWidth="1.4" />
+        <path d="M9 22 L13.5 12 L17 18.5 L20.5 12 L25 22" stroke={fg} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" fill="none" />
+        <circle cx="17" cy="8.5" r="1.6" fill={accent} />
+      </svg>
+      <div className="leading-none">
+        <div className="font-medium tracking-tight" style={{ color: fg, fontSize: 15 }}>iapyme<span style={{ color: accent }}>·</span>consultores</div>
+        <div className="font-mono text-[10px] mt-0.5 tracking-widest uppercase" style={{ color: light ? '#A8A496' : '#26407A' }}>Webs que venden</div>
+      </div>
+    </div>
+  );
+}
+window.BrandMark = BrandMark;
+
+// Reveal-on-scroll wrapper
+function Reveal({ children, delay = 0, as: As = 'div', className = '' }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => el.classList.add('in'), delay);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [delay]);
+  return <As ref={ref} className={`reveal ${className}`}>{children}</As>;
+}
+window.Reveal = Reveal;
+
+// Eyebrow label
+function Eyebrow({ num, children, className = '' }) {
+  return (
+    <div className={`flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] ${className}`}>
+      {num && <span className="opacity-60">{num}</span>}
+      <span className="h-px w-8 bg-current opacity-30" />
+      <span>{children}</span>
+    </div>
+  );
+}
+window.Eyebrow = Eyebrow;
+
+// Placeholder image block (striped)
+function ImagePlaceholder({ ratio = '4/3', label = 'Imagen', className = '', tone = 'paper' }) {
+  const styles = {
+    paper:   { bg: '#F4F3EE', stripe: 'rgba(10,21,48,.06)', fg: '#26407A' },
+    ink:     { bg: '#0F1F44', stripe: 'rgba(250,250,247,.06)', fg: '#A8A496' },
+  }[tone];
+  return (
+    <div className={`relative overflow-hidden rounded-2xl ${className}`} style={{ aspectRatio: ratio, background: styles.bg, backgroundImage: `repeating-linear-gradient(135deg, ${styles.stripe} 0 1px, transparent 1px 14px)` }}>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] px-2 py-1 rounded" style={{ color: styles.fg, background: tone === 'ink' ? 'rgba(7,13,31,.4)' : 'rgba(250,250,247,.6)' }}>{label}</span>
+      </div>
+    </div>
+  );
+}
+window.ImagePlaceholder = ImagePlaceholder;
+
+
+// ===== parts/nav.jsx =====
+function Nav({ active }) {
+  const [open, setOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const links = [
+    { href: '#problema', label: 'El problema' },
+    { href: '#metodo',   label: 'Método' },
+    { href: '#muebleria',label: 'Mockup' },
+    { href: '#inversion',label: 'Inversión' },
+  ];
+
+  return (
+    <header className={`fixed top-0 inset-x-0 z-40 transition-all duration-500 ${scrolled ? 'bg-paper-50/85 backdrop-blur-md border-b border-paper-200 text-ink-900' : 'bg-ink-950/70 backdrop-blur-md border-b border-paper-50/10 text-paper-50'}`}>
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 sm:h-[72px] flex items-center justify-between">
+        <a href="#top" className="shrink-0"><BrandMark light={!scrolled} /></a>
+
+        <nav className={`hidden md:flex items-center gap-8 text-[13.5px] ${scrolled ? 'text-ink-900' : 'text-paper-50'}`}>
+          {links.map(l => (
+            <a key={l.href} href={l.href} className="nav-link">{l.label}</a>
+          ))}
+        </nav>
+
+        <div className="hidden md:flex items-center gap-3">
+          <span className={`hidden lg:inline-flex items-center gap-1.5 text-[12px] font-mono ${scrolled ? 'text-ink-700/80' : 'text-paper-200/80'}`}>
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 rounded-full bg-esmeralda-500 pulse-ring" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-esmeralda-500" />
+            </span>
+            Disponibles esta semana
+          </span>
+          <a href="#cta" className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13.5px] font-medium transition-colors ${scrolled ? 'bg-ink-900 text-paper-50 hover:bg-ink-800' : 'bg-esmeralda-500 text-ink-950 hover:bg-esmeralda-400'}`}>
+            Agendar consultoría
+            <LIcon name="ArrowUpRight" className="w-4 h-4" />
+          </a>
+        </div>
+
+        <button onClick={() => setOpen(o => !o)} className={`md:hidden w-10 h-10 -mr-2 flex items-center justify-center rounded-full ${scrolled ? 'hover:bg-paper-200' : 'hover:bg-paper-50/10'}`} aria-label="Menú">
+          <LIcon name={open ? 'X' : 'Menu'} className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Mobile drawer */}
+      <div className={`md:hidden overflow-hidden transition-[max-height] duration-500 ${open ? 'max-h-[420px]' : 'max-h-0'} bg-paper-50 border-b border-paper-200`}>
+        <nav className="px-5 py-4 flex flex-col gap-1">
+          {links.map(l => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-paper-100">
+              <span>{l.label}</span>
+              <LIcon name="ArrowRight" className="w-4 h-4 opacity-50" />
+            </a>
+          ))}
+          <a href="#cta" onClick={() => setOpen(false)} className="mt-2 flex items-center justify-center gap-2 bg-ink-900 text-paper-50 rounded-xl px-4 py-3.5 text-[14px] font-medium">
+            Agendar consultoría gratuita
+            <LIcon name="ArrowUpRight" className="w-4 h-4" />
+          </a>
+        </nav>
+      </div>
+    </header>
+  );
+}
+window.Nav = Nav;
+
+// Floating contact CTA (correo / formulario)
+function WhatsappFab() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="fixed z-50 right-4 sm:right-6 bottom-4 sm:bottom-6 flex flex-col items-end gap-3">
+      {open && (
+        <div className="w-[280px] bg-paper-50 rounded-2xl shadow-lift border border-paper-200 overflow-hidden">
+          <div className="bg-esmeralda-600 text-paper-50 px-4 py-3 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-paper-50/15 flex items-center justify-center">
+              <LIcon name="Mail" className="w-5 h-5" />
+            </div>
+            <div className="leading-tight">
+              <div className="text-[13px] font-medium">Equipo iapyme</div>
+              <div className="text-[11px] opacity-80 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-esmeralda-400" />
+                En línea — respondemos en menos de 24 h
+              </div>
+            </div>
+          </div>
+          <div className="p-4 space-y-3">
+            <div className="bg-paper-100 rounded-xl rounded-tl-sm px-3 py-2 text-[13px] text-ink-900 max-w-[85%]">
+              ¡Qué gusto! Cuéntenos del negocio y le mandamos una propuesta a su medida en cuanto la veamos.
+            </div>
+            <a href="#cta" onClick={() => setOpen(false)} className="block text-center bg-esmeralda-500 hover:bg-esmeralda-600 text-paper-50 rounded-xl py-2.5 text-[13px] font-medium">
+              Iniciar conversación
+            </a>
+          </div>
+        </div>
+      )}
+      <button onClick={() => setOpen(o => !o)} className="relative w-14 h-14 rounded-full bg-esmeralda-500 hover:bg-esmeralda-600 text-paper-50 shadow-lift flex items-center justify-center">
+        <span className="absolute inset-0 rounded-full bg-esmeralda-500 pulse-ring" />
+        <LIcon name={open ? 'X' : 'Mail'} className="w-6 h-6 relative" strokeWidth={1.8} />
+      </button>
+    </div>
+  );
+}
+window.WhatsappFab = WhatsappFab;
+
+
+// ===== parts/hero.jsx =====
+function Hero() {
+  return (
+    <section id="top" className="relative hero-aurora text-paper-50 overflow-hidden grain pt-24 sm:pt-28 pb-16 sm:pb-24">
+      {/* Subtle grid */}
+      <div aria-hidden="true" className="absolute inset-0 opacity-[0.07]" style={{
+        backgroundImage: 'linear-gradient(#FAFAF7 1px, transparent 1px), linear-gradient(90deg, #FAFAF7 1px, transparent 1px)',
+        backgroundSize: '64px 64px',
+        maskImage: 'radial-gradient(80% 70% at 50% 30%, #000 0%, transparent 75%)',
+        WebkitMaskImage: 'radial-gradient(80% 70% at 50% 30%, #000 0%, transparent 75%)',
+      }} />
+
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8">
+        {/* Top label row */}
+        <Reveal>
+          <div className="flex flex-wrap items-center gap-3 mb-8 sm:mb-10">
+            <span className="stamp text-paper-100/90">Propuesta · 2026</span>
+            <span className="font-mono text-[11px] tracking-[0.16em] text-paper-300/80 uppercase">Propuesta personalizada para PyMEs en México</span>
+          </div>
+        </Reveal>
+
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end">
+          <div className="lg:col-span-12">
+            <Reveal delay={80}>
+              <h1 className="text-[42px] sm:text-[64px] lg:text-[88px] leading-[0.95] tracking-[-0.02em] text-balance">
+                Su negocio merece <span className="font-display italic text-esmeralda-400">vender en línea</span> — sin volverse un experto en tecnología.
+              </h1>
+            </Reveal>
+            <Reveal delay={180}>
+              <p className="mt-7 max-w-[640px] text-[17px] sm:text-[19px] leading-relaxed text-paper-200 text-pretty">
+                Construimos páginas web que trabajan por usted: atraen clientes nuevos, los conectan a su WhatsApp y convierten visitas en ventas. Nos encargamos de todo, en español claro y con resultados medibles.
+              </p>
+            </Reveal>
+
+            <Reveal delay={280}>
+              <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
+                <a href="#cta" className="group inline-flex items-center justify-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-full pl-6 pr-2 py-2 text-[15px] font-medium transition-colors">
+                  Agendar mi consultoría gratis
+                  <span className="ml-1 w-9 h-9 rounded-full bg-ink-950 text-paper-50 flex items-center justify-center transition-transform group-hover:rotate-45">
+                    <LIcon name="ArrowUpRight" className="w-4 h-4" />
+                  </span>
+                </a>
+                <a href="#muebleria" className="inline-flex items-center justify-center gap-2 text-paper-100 hover:text-paper-50 px-2 py-3 text-[14px]">
+                  <LIcon name="Play" className="w-4 h-4" />
+                  Ver ejemplo interactivo
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={400}>
+              <div className="mt-12 grid grid-cols-3 gap-6 sm:gap-10 max-w-[520px]">
+                {[
+                  { k: '4×', v: 'más prospectos en promedio en 90 días' },
+                  { k: '< 24h', v: 'respuesta a sus dudas, siempre' },
+                  { k: '100%', v: 'editable por usted, sin pagar extra' },
+                ].map((s, i) => (
+                  <div key={i} className="border-l border-paper-50/15 pl-4">
+                    <div className="font-display text-[28px] sm:text-[34px] leading-none text-esmeralda-400">{s.k}</div>
+                    <div className="mt-2 text-[12px] leading-snug text-paper-300">{s.v}</div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+        </div>
+
+        {/* Marquee */}
+        <Reveal delay={500}>
+          <div className="mt-16 sm:mt-24 -mx-5 sm:-mx-8 marquee-mask overflow-hidden">
+            <div className="marquee-track flex whitespace-nowrap text-paper-300/80 font-display italic text-[28px] sm:text-[40px]">
+              {[...Array(2)].map((_, k) => (
+                <div key={k} className="flex items-center">
+                  <span>Más ventas</span><span className="dot" />
+                  <span>Más prestigio</span><span className="dot" />
+                  <span>Más tiempo libre</span><span className="dot" />
+                  <span>Más clientes en WhatsApp</span><span className="dot" />
+                  <span>Sin tecnicismos</span><span className="dot" />
+                  <span>Más ventas</span><span className="dot" />
+                  <span>Más prestigio</span><span className="dot" />
+                  <span>Más tiempo libre</span><span className="dot" />
+                  <span>Más clientes en WhatsApp</span><span className="dot" />
+                  <span>Sin tecnicismos</span><span className="dot" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+window.Hero = Hero;
+
+
+// ===== parts/problema.jsx =====
+function Problema() {
+  const stats = [
+    { k: '76%', v: 'de los compradores mexicanos buscan en internet antes de visitar una tienda física.', src: 'AMVO 2025' },
+    { k: '2.4×', v: 'más probable que elijan a su competidor si tiene web profesional y usted no.', src: 'Estudio PyME Digital' },
+    { k: '$0', v: 'es lo que cuesta no estar online… hasta que lo mide en ventas perdidas.', src: 'Realidad cotidiana' },
+  ];
+
+  return (
+    <section id="problema" className="relative py-20 sm:py-32 bg-paper-50 grain">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-5">
+            <Reveal>
+              <Eyebrow num="01" className="text-ink-700">El problema · La oportunidad</Eyebrow>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 text-[36px] sm:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.02em] text-balance">
+                El boca a boca <span className="font-display italic text-terracota">ya no alcanza</span>.
+              </h2>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-6 text-[16.5px] sm:text-[18px] leading-relaxed text-ink-700 text-pretty max-w-[480px]">
+                Su producto es bueno, su servicio es legendario y los clientes lo recomiendan. Pero cada vez que alguien busca su tipo de negocio en Google y no lo encuentra, esa venta se la lleva alguien más. Sin drama, sin maldad — así es el mercado hoy.
+              </p>
+            </Reveal>
+            <Reveal delay={240}>
+              <div className="mt-8 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-ink-900 text-paper-50 flex items-center justify-center">
+                  <LIcon name="Compass" className="w-5 h-5" />
+                </div>
+                <div className="text-[14px] text-ink-700 max-w-[300px]">
+                  La buena noticia: la gran mayoría de sus competidores tampoco lo está haciendo bien. <span className="text-ink-900 font-medium">Hay ventana — pero se está cerrando.</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Right — split-screen "antes / después" */}
+          <div className="lg:col-span-7">
+            <Reveal delay={120}>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* Antes */}
+                <div className="rounded-2xl border border-paper-200 bg-paper-100 p-5 sm:p-6 dots-bg">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-700/70">Hoy</span>
+                    <LIcon name="CloudOff" className="w-5 h-5 text-ink-700/60" />
+                  </div>
+                  <ul className="mt-5 space-y-3 text-[14.5px] text-ink-900">
+                    {[
+                      'Clientes que ya no llegan caminando',
+                      'WhatsApp con preguntas a las 11pm',
+                      'Catálogo en PDF que nadie abre',
+                      'Pagar Facebook sin saber el retorno',
+                    ].map((t,i)=>(
+                      <li key={i} className="flex gap-3">
+                        <LIcon name="X" className="w-4 h-4 mt-0.5 text-terracota" strokeWidth={2} />
+                        <span>{t}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* Despues */}
+                <div className="rounded-2xl bg-ink-900 text-paper-50 p-5 sm:p-6 relative overflow-hidden">
+                  <div className="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-esmeralda-500/20 blur-2xl" />
+                  <div className="relative flex items-center justify-between">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper-300">En 6 semanas</span>
+                    <LIcon name="Sparkles" className="w-5 h-5 text-esmeralda-400" />
+                  </div>
+                  <ul className="relative mt-5 space-y-3 text-[14.5px]">
+                    {[
+                      'Visitas calificadas desde Google',
+                      'Prospectos directos a su WhatsApp',
+                      'Catálogo bonito que se actualiza solo',
+                      'Cada dólar invertido, medible',
+                    ].map((t,i)=>(
+                      <li key={i} className="flex gap-3">
+                        <LIcon name="Check" className="w-4 h-4 mt-0.5 text-esmeralda-400" strokeWidth={2.4} />
+                        <span>{t}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Stats row */}
+            <div className="mt-10 grid sm:grid-cols-3 gap-px bg-paper-200 rounded-2xl overflow-hidden border border-paper-200">
+              {stats.map((s,i)=>(
+                <Reveal key={i} delay={180 + i*80}>
+                  <div className="bg-paper-50 p-6 h-full lift">
+                    <div className="font-display text-[44px] leading-none text-ink-900">{s.k}</div>
+                    <div className="mt-3 text-[14px] text-ink-700 leading-snug">{s.v}</div>
+                    <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-700/50">— {s.src}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+window.Problema = Problema;
+
+
+// ===== parts/metodo.jsx =====
+function Metodo() {
+  const [active, setActive] = React.useState(0);
+  const pillars = [
+    {
+      icon: 'PenTool',
+      label: 'Diseño a medida',
+      kicker: 'Su marca, no una plantilla',
+      desc: 'Diseñamos cada sección pensando en cómo compra su cliente real. Su web no se va a parecer a la del vecino — porque su negocio tampoco.',
+      bullets: ['Identidad visual coherente', 'Fotografía profesional opcional', 'Mensajes que conectan, no que aburren'],
+    },
+    {
+      icon: 'Smartphone',
+      label: 'Optimización móvil',
+      kicker: 'El 8 de cada 10 clientes lo verán desde el celular',
+      desc: 'Cargas rápidas, botones grandes, lectura cómoda con una sola mano. Si en el celular no convence, no convence.',
+      bullets: ['Carga en menos de 2 segundos', 'Diseño mobile-first real', 'SEO técnico desde el día uno'],
+    },
+    {
+      icon: 'MessageCircle',
+      label: 'WhatsApp integrado',
+      kicker: 'Donde sus clientes ya están',
+      desc: 'Cada visitante interesado llega directo a su WhatsApp con el mensaje pre-llenado. Usted solo cierra la venta.',
+      bullets: ['Botón flotante 24/7', 'Respuestas automáticas opcionales', 'Aviso por correo de cada lead'],
+    },
+    {
+      icon: 'Settings2',
+      label: 'Autogestionable',
+      kicker: 'Si lo desea, sin depender de nadie',
+      desc: 'Le entregamos un panel sencillo para que cambie precios, suba productos o publique promociones — en 5 minutos, sin código.',
+      bullets: ['Panel en español, sin tecnicismos', 'Capacitación grabada de 30 minutos', 'Soporte por WhatsApp incluido'],
+    },
+  ];
+
+  return (
+    <section id="metodo" className="relative py-20 sm:py-32 bg-ink-950 text-paper-50 overflow-hidden">
+      <div aria-hidden="true" className="absolute inset-0 opacity-[0.05]" style={{
+        backgroundImage: 'linear-gradient(#FAFAF7 1px, transparent 1px), linear-gradient(90deg, #FAFAF7 1px, transparent 1px)',
+        backgroundSize: '64px 64px',
+      }} />
+      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-esmeralda-500/10 blur-3xl" />
+      <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-terracota/10 blur-3xl" />
+
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 items-end">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <Eyebrow num="02" className="text-paper-300">El método iapymeconsultores</Eyebrow>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 text-[36px] sm:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.02em] text-balance">
+                Cuatro pilares. <span className="font-display italic text-esmeralda-400">Una sola promesa</span>: que le funcione.
+              </h2>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-5">
+            <Reveal delay={140}>
+              <p className="text-[15.5px] text-paper-300 leading-relaxed text-pretty">
+                No vendemos páginas. Vendemos máquinas de prospección que trabajan para usted las 24 horas. Cada pilar tiene un porqué — y se nota en su caja registradora.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="mt-14 grid lg:grid-cols-12 gap-6 lg:gap-10">
+          <div className="lg:col-span-5 flex flex-col gap-2">
+            {pillars.map((p, i) => (
+              <button key={i} onClick={() => setActive(i)} className={`text-left rounded-2xl border transition-all duration-300 p-5 flex items-start gap-4 ${active === i ? 'bg-paper-50 text-ink-900 border-paper-50 shadow-lift' : 'bg-transparent border-paper-50/15 hover:border-paper-50/30 text-paper-100'}`}>
+                <div className={`shrink-0 w-11 h-11 rounded-xl flex items-center justify-center ${active === i ? 'bg-esmeralda-500 text-ink-950' : 'bg-paper-50/10 text-paper-50'}`}>
+                  <LIcon name={p.icon} className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="font-mono text-[10.5px] uppercase tracking-[0.16em] opacity-70">0{i+1}</div>
+                    <LIcon name="ArrowRight" className={`w-4 h-4 transition-transform ${active === i ? 'translate-x-0' : '-translate-x-1 opacity-40'}`} />
+                  </div>
+                  <div className="mt-1 text-[16px] font-medium">{p.label}</div>
+                  <div className={`text-[12.5px] mt-0.5 ${active === i ? 'text-ink-700' : 'text-paper-300'}`}>{p.kicker}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div className="lg:col-span-7">
+            <div className="rounded-3xl bg-paper-50 text-ink-900 p-6 sm:p-10 min-h-[420px] flex flex-col">
+              <div className="flex items-center justify-between">
+                <span className="stamp text-ink-700">Pilar {active+1} de 4</span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-700/60">{pillars[active].label}</span>
+              </div>
+
+              <div key={active} className="mt-8 flex-1 reveal in" style={{animation:'none'}}>
+                <div className="font-display text-[40px] sm:text-[52px] leading-[1] text-balance">
+                  {pillars[active].kicker}
+                </div>
+                <p className="mt-5 text-[15.5px] sm:text-[16.5px] leading-relaxed text-ink-700 text-pretty max-w-[560px]">
+                  {pillars[active].desc}
+                </p>
+                <ul className="mt-7 grid sm:grid-cols-1 gap-2.5">
+                  {pillars[active].bullets.map((b,i)=>(
+                    <li key={i} className="flex items-center gap-3 text-[14.5px]">
+                      <span className="w-6 h-6 rounded-full bg-esmeralda-500/15 text-esmeralda-700 flex items-center justify-center">
+                        <LIcon name="Check" className="w-3.5 h-3.5" strokeWidth={2.4} />
+                      </span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-paper-200 flex items-center justify-between">
+                <div className="text-[12px] text-ink-700/70 font-mono uppercase tracking-[0.14em]">Incluido sin costo extra</div>
+                <div className="flex items-center gap-1.5">
+                  {pillars.map((_,i)=>(
+                    <button key={i} onClick={()=>setActive(i)} className={`h-1.5 rounded-full transition-all ${active === i ? 'w-8 bg-ink-900' : 'w-1.5 bg-paper-300'}`} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+window.Metodo = Metodo;
+
+
+// ===== parts/muebleria.jsx =====
+function Muebleria() {
+  const [tab, setTab] = React.useState('inicio');
+  const tabs = [
+    { id: 'inicio', label: 'Inicio' },
+    { id: 'catalogo', label: 'Catálogo' },
+    { id: 'producto', label: 'Producto' },
+  ];
+
+  return (
+    <section id="muebleria" className="relative py-20 sm:py-32 bg-paper-100 grain overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-5 lg:sticky lg:top-28">
+            <Reveal>
+              <Eyebrow num="03" className="text-ink-700">Ejemplo de proyecto</Eyebrow>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 text-[36px] sm:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.02em] text-balance">
+                Así se vería su <span className="font-display italic text-terracota">negocio</span> en línea.
+              </h2>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-6 text-[16.5px] leading-relaxed text-ink-700 text-pretty max-w-[480px]">
+                Este es un ejemplo ilustrativo aplicado al sector retail. Lo adaptamos a su giro: catálogo, servicios, reservas, contacto directo — el formato cambia, el método de venta es el mismo. Toque cada pestaña para verlo en movimiento.
+              </p>
+            </Reveal>
+
+            <Reveal delay={240}>
+              <ul className="mt-8 space-y-4">
+                {[
+                  { i: 'Camera', t: 'Galería de producto o servicio', d: 'Sus piezas en escenarios reales, su equipo trabajando, sus instalaciones — lo que más convenza a su cliente.' },
+                  { i: 'Tags', t: 'Catálogo o secciones con filtros', d: 'Filtros pensados para su giro: estilo, precio, ubicación, disponibilidad. El cliente llega listo para decidir.' },
+                  { i: 'Calculator', t: 'Información clara de precios', d: 'Tarifas, mensualidades o paquetes visibles. Menos preguntas repetidas, más decisiones rápidas.' },
+                  { i: 'Truck', t: 'Cobertura o zona de servicio', d: 'Mapa con sus zonas de cobertura, sucursales o entregas. Cero llamadas para preguntar lo mismo.' },
+                ].map((f,i)=>(
+                  <li key={i} className="flex gap-4">
+                    <div className="shrink-0 w-10 h-10 rounded-xl bg-paper-50 border border-paper-200 flex items-center justify-center">
+                      <LIcon name={f.i} className="w-4.5 h-4.5 text-ink-700" />
+                    </div>
+                    <div>
+                      <div className="text-[15px] font-medium text-ink-900">{f.t}</div>
+                      <div className="text-[13.5px] text-ink-700 mt-0.5 leading-snug">{f.d}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-7">
+            <Reveal delay={140}>
+              <div className="relative">
+                {/* Floating stickers */}
+                <div className="hidden sm:flex absolute -top-2 -left-6 z-10 items-center gap-2 bg-paper-50 border border-paper-200 rounded-full pl-2 pr-4 py-1.5 shadow-soft -rotate-3">
+                  <span className="w-6 h-6 rounded-full bg-esmeralda-500 flex items-center justify-center text-paper-50">
+                    <LIcon name="Check" className="w-3.5 h-3.5" strokeWidth={3} />
+                  </span>
+                  <span className="text-[12.5px] text-ink-900">Diseño exclusivo · sin plantillas</span>
+                </div>
+                <div className="hidden sm:flex absolute top-16 -right-4 z-10 items-center gap-2 bg-ink-900 text-paper-50 rounded-full px-4 py-1.5 shadow-lift rotate-2">
+                  <LIcon name="Zap" className="w-3.5 h-3.5 text-esmeralda-400" />
+                  <span className="text-[12.5px]">Carga en 1.4s</span>
+                </div>
+
+                <div className="grid grid-cols-12 gap-6 items-start">
+                  {/* Phone */}
+                  <div className="col-span-12 sm:col-span-7">
+                    <div className="device-bezel mx-auto max-w-[340px]">
+                      <div className="bg-paper-50 rounded-[36px] overflow-hidden relative" style={{aspectRatio: '9/19.5'}}>
+                        {/* Status bar */}
+                        <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-medium text-ink-900">
+                          <span>9:41</span>
+                          <div className="flex items-center gap-1">
+                            <LIcon name="Signal" className="w-3 h-3" />
+                            <LIcon name="Wifi" className="w-3 h-3" />
+                            <LIcon name="BatteryFull" className="w-4 h-4" />
+                          </div>
+                        </div>
+
+                        {/* Browser bar */}
+                        <div className="mx-3 my-2 flex items-center gap-2 bg-paper-100 rounded-full px-3 py-1.5">
+                          <LIcon name="Lock" className="w-3 h-3 text-ink-700/70" />
+                          <span className="text-[11px] text-ink-700 truncate">sunegocio.mx</span>
+                          <LIcon name="RotateCcw" className="w-3 h-3 text-ink-700/60 ml-auto" />
+                        </div>
+
+                        {/* Site nav */}
+                        <div className="px-4 pt-1 pb-3 flex items-center justify-between">
+                          <div className="leading-none">
+                            <div className="font-display text-[18px] leading-none text-ink-900">Su Negocio</div>
+                            <div className="text-[8.5px] tracking-[0.18em] uppercase text-ink-700/70 mt-0.5">Ejemplo · Sector retail</div>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <button className="w-7 h-7 rounded-full bg-paper-100 flex items-center justify-center"><LIcon name="Search" className="w-3.5 h-3.5 text-ink-900" /></button>
+                            <button className="w-7 h-7 rounded-full bg-paper-100 flex items-center justify-center"><LIcon name="Heart" className="w-3.5 h-3.5 text-ink-900" /></button>
+                            <button className="w-7 h-7 rounded-full bg-ink-900 text-paper-50 flex items-center justify-center"><LIcon name="Menu" className="w-3.5 h-3.5" /></button>
+                          </div>
+                        </div>
+
+                        {/* Tab switcher (in-screen) */}
+                        <div className="px-3 mb-2 flex gap-1.5">
+                          {tabs.map(t => (
+                            <button key={t.id} onClick={() => setTab(t.id)} className={`flex-1 text-[11px] py-1.5 rounded-full transition-colors ${tab === t.id ? 'bg-ink-900 text-paper-50' : 'bg-paper-100 text-ink-700'}`}>
+                              {t.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Phone screen content */}
+                        <div className="phone-screen overflow-y-auto" style={{height: 'calc(100% - 165px)'}}>
+                          {tab === 'inicio' && <PhoneInicio />}
+                          {tab === 'catalogo' && <PhoneCatalogo />}
+                          {tab === 'producto' && <PhoneProducto />}
+                        </div>
+
+                        {/* Floating WhatsApp on phone */}
+                        <div className="absolute right-3 bottom-3">
+                          <div className="relative">
+                            <span className="absolute inset-0 rounded-full bg-esmeralda-500 pulse-ring" />
+                            <div className="relative w-10 h-10 rounded-full bg-esmeralda-500 flex items-center justify-center text-paper-50 shadow-lift">
+                              <LIcon name="MessageCircle" className="w-5 h-5" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Side: customer card */}
+                  <div className="col-span-12 sm:col-span-5 flex flex-col gap-4">
+                    <div className="rounded-2xl bg-paper-50 border border-paper-200 p-5 shadow-soft">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-terracota/15 text-terracota flex items-center justify-center font-medium">CP</div>
+                        <div className="leading-tight">
+                          <div className="text-[13.5px] font-medium text-ink-900">Cliente potencial</div>
+                          <div className="text-[11px] text-ink-700/70">Llegó desde su web · WhatsApp</div>
+                        </div>
+                      </div>
+                      <div className="mt-4 bg-paper-100 rounded-xl rounded-tl-sm px-3 py-2.5 text-[13px] text-ink-900">
+                        Hola, vi su web y me interesa lo que ofrecen. ¿Pueden mandarme más información y precios? ¿Atienden en mi zona?
+                      </div>
+                      <div className="mt-2 flex items-center gap-2 text-[11px] text-ink-700/60 font-mono">
+                        <span>Generado por su web</span><span>·</span><span>9:42 a.m.</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-ink-900 text-paper-50 p-5 relative overflow-hidden">
+                      <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-esmeralda-500/20 blur-2xl" />
+                      <div className="relative">
+                        <div className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-paper-300">Resumen del mes</div>
+                        <div className="mt-2 font-display text-[40px] leading-none text-paper-50">142</div>
+                        <div className="text-[12.5px] text-paper-300">prospectos directos a su WhatsApp</div>
+                        <div className="mt-4 grid grid-cols-2 gap-3 text-[12px]">
+                          <div>
+                            <div className="text-paper-300">Visitas</div>
+                            <div className="text-paper-50 text-[18px] font-medium">3,418</div>
+                          </div>
+                          <div>
+                            <div className="text-paper-300">Conversión</div>
+                            <div className="text-esmeralda-400 text-[18px] font-medium">4.1%</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-dashed border-paper-300 p-4 text-[12.5px] text-ink-700 leading-snug bg-paper-50/50">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-700/60">Nota del diseñador</span>
+                      <p className="mt-1.5">Este mockup es ilustrativo. En la consultoría definimos juntos los colores, secciones y contenido reales de su negocio — sea retail, servicios, manufactura o restauración.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PhoneInicio() {
+  return (
+    <div className="px-3 pb-4 space-y-3">
+      {/* Hero */}
+      <div className="relative rounded-2xl overflow-hidden h-44">
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(135deg, #2c1810 0%, #5b3a26 60%, #8b6240 100%)'
+        }} />
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: 'repeating-linear-gradient(45deg, rgba(250,250,247,.08) 0 1px, transparent 1px 8px)'
+        }} />
+        <div className="absolute inset-0 p-4 flex flex-col justify-end text-paper-50">
+          <div className="font-mono text-[9px] tracking-[0.18em] uppercase text-paper-100/80">Temporada · Otoño</div>
+          <div className="font-display text-[22px] leading-tight">Su sala favorita, hasta 24 MSI.</div>
+          <button className="self-start mt-2 bg-esmeralda-500 text-ink-950 text-[10.5px] px-3 py-1.5 rounded-full font-medium">Ver salas</button>
+        </div>
+      </div>
+
+      {/* Categories */}
+      <div className="grid grid-cols-3 gap-2">
+        {[
+          { l: 'Salas', i: 'Sofa' },
+          { l: 'Recámaras', i: 'BedDouble' },
+          { l: 'Comedores', i: 'Utensils' },
+        ].map((c,i)=>(
+          <div key={i} className="rounded-xl bg-paper-100 p-2.5 flex flex-col items-center gap-1.5">
+            <div className="w-9 h-9 rounded-full bg-paper-50 flex items-center justify-center">
+              <LIcon name={c.i} className="w-4 h-4 text-ink-900" />
+            </div>
+            <div className="text-[10px] text-ink-900">{c.l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Lo más buscado */}
+      <div className="flex items-center justify-between">
+        <div className="text-[12px] font-medium text-ink-900">Lo más vendido</div>
+        <div className="text-[10px] text-ink-700/70">ver todo</div>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {[
+          { n: 'Sala Coyoacán', p: '$14,990', m: '$624 / mes', c: '#a17651' },
+          { n: 'Recámara Roma', p: '$22,500', m: '$937 / mes', c: '#3a3a3a' },
+        ].map((p,i)=>(
+          <div key={i} className="rounded-xl bg-paper-50 border border-paper-200 overflow-hidden">
+            <div className="h-20 relative" style={{background: p.c}}>
+              <div className="absolute inset-0 opacity-20" style={{backgroundImage:'repeating-linear-gradient(135deg, rgba(250,250,247,.5) 0 1px, transparent 1px 6px)'}} />
+              <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-paper-50/90 flex items-center justify-center">
+                <LIcon name="Heart" className="w-2.5 h-2.5 text-ink-900" />
+              </div>
+            </div>
+            <div className="p-2">
+              <div className="text-[10.5px] font-medium text-ink-900 truncate">{p.n}</div>
+              <div className="flex items-center justify-between mt-0.5">
+                <div className="text-[11px] text-ink-900">{p.p}</div>
+                <div className="text-[8.5px] text-esmeralda-700 font-mono">{p.m}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Trust strip */}
+      <div className="rounded-xl bg-paper-100 p-2.5 grid grid-cols-3 text-center">
+        {[
+          { i: 'Truck', l: 'Entrega' },
+          { i: 'ShieldCheck', l: '5 años' },
+          { i: 'CreditCard', l: '24 MSI' },
+        ].map((t,i)=>(
+          <div key={i} className="flex flex-col items-center gap-1 border-r last:border-r-0 border-paper-200">
+            <LIcon name={t.i} className="w-3.5 h-3.5 text-ink-900" />
+            <div className="text-[9px] text-ink-700">{t.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PhoneCatalogo() {
+  return (
+    <div className="px-3 pb-4 space-y-3">
+      {/* Filters */}
+      <div className="flex gap-1.5 overflow-x-auto -mx-3 px-3 phone-screen">
+        {['Todo','Salas','Recámaras','Comedores','Oficina','Niños'].map((f,i)=>(
+          <button key={i} className={`shrink-0 text-[10.5px] px-3 py-1.5 rounded-full ${i===1 ? 'bg-ink-900 text-paper-50' : 'bg-paper-100 text-ink-900'}`}>{f}</button>
+        ))}
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="text-[10.5px] text-ink-700">38 productos</div>
+        <button className="flex items-center gap-1 text-[10.5px] text-ink-900"><LIcon name="SlidersHorizontal" className="w-3 h-3" /> Filtros</button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {[
+          { n: 'Sala Coyoacán', p: '$14,990', m: '$624', c: '#a17651' },
+          { n: 'Sala Polanco', p: '$19,500', m: '$812', c: '#5b3a26' },
+          { n: 'Sala Mérida',  p: '$11,800', m: '$491', c: '#c4a17a' },
+          { n: 'Sala Oaxaca',  p: '$16,400', m: '$683', c: '#3a3a3a' },
+          { n: 'Sala Roma',    p: '$13,200', m: '$549', c: '#8b6240' },
+          { n: 'Sala Condesa', p: '$21,900', m: '$912', c: '#2c1810' },
+        ].map((p,i)=>(
+          <div key={i} className="rounded-xl bg-paper-50 border border-paper-200 overflow-hidden">
+            <div className="h-24 relative" style={{background: p.c}}>
+              <div className="absolute inset-0 opacity-25" style={{backgroundImage:'repeating-linear-gradient(135deg, rgba(250,250,247,.5) 0 1px, transparent 1px 6px)'}} />
+              {i === 0 && <div className="absolute top-1.5 left-1.5 bg-terracota text-paper-50 text-[8px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded">−15%</div>}
+            </div>
+            <div className="p-2">
+              <div className="text-[10.5px] font-medium text-ink-900 truncate">{p.n}</div>
+              <div className="text-[10.5px] text-ink-900 mt-0.5">{p.p}</div>
+              <div className="text-[8.5px] text-esmeralda-700 font-mono">{p.m} × 24m</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PhoneProducto() {
+  return (
+    <div className="pb-4">
+      <div className="relative h-48" style={{background:'linear-gradient(135deg, #5b3a26, #a17651)'}}>
+        <div className="absolute inset-0 opacity-25" style={{backgroundImage:'repeating-linear-gradient(135deg, rgba(250,250,247,.5) 0 1px, transparent 1px 6px)'}} />
+        <div className="absolute bottom-2 left-2 right-2 flex gap-1">
+          {[0,1,2,3].map(i=>(
+            <div key={i} className={`h-1 flex-1 rounded-full ${i===0 ? 'bg-paper-50' : 'bg-paper-50/40'}`} />
+          ))}
+        </div>
+      </div>
+      <div className="px-3 pt-3 space-y-2.5">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <div className="font-display text-[19px] leading-tight text-ink-900">Sala Coyoacán</div>
+            <div className="text-[10.5px] text-ink-700/70">Sofá 3 plazas + 2 sillones · Tela tipo lino</div>
+          </div>
+          <div className="flex items-center gap-0.5 text-[10px] text-ink-900">
+            <LIcon name="Star" className="w-3 h-3 fill-current text-terracota" />
+            <span>4.8</span>
+          </div>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <div className="text-[20px] font-medium text-ink-900">$14,990</div>
+          <div className="text-[11px] text-ink-700/60 line-through">$17,650</div>
+        </div>
+        <div className="bg-esmeralda-500/10 border border-esmeralda-500/30 rounded-xl p-2.5">
+          <div className="flex items-center gap-1.5 text-[10.5px] text-esmeralda-700 font-medium">
+            <LIcon name="CreditCard" className="w-3 h-3" />
+            24 mensualidades sin intereses
+          </div>
+          <div className="text-[18px] font-medium text-ink-900 mt-0.5">$624 <span className="text-[10px] font-normal text-ink-700">/mes</span></div>
+        </div>
+        <div className="grid grid-cols-3 gap-1.5">
+          {['#a17651','#3a3a3a','#c4a17a'].map((c,i)=>(
+            <button key={i} className={`h-8 rounded-lg ${i===0 ? 'ring-2 ring-ink-900 ring-offset-1' : ''}`} style={{background: c}} />
+          ))}
+        </div>
+        <button className="w-full bg-esmeralda-500 text-ink-950 rounded-xl py-2.5 text-[12.5px] font-medium flex items-center justify-center gap-2">
+          <LIcon name="MessageCircle" className="w-3.5 h-3.5" />
+          Apartar por WhatsApp
+        </button>
+        <button className="w-full bg-paper-100 text-ink-900 rounded-xl py-2.5 text-[12.5px] font-medium">
+          Agendar visita a tienda
+        </button>
+      </div>
+    </div>
+  );
+}
+
+window.Muebleria = Muebleria;
+
+
+// ===== parts/roi.jsx =====
+function ROI() {
+  const [visitas, setVisitas] = React.useState(1500);
+  const [ticket, setTicket] = React.useState(400);
+  const conv = 0.035; // 3.5% lead → cliente
+  const ventas = Math.round(visitas * conv);
+  const ingresos = ventas * ticket;
+  const inversion = 850;
+  const meses = inversion / Math.max(ingresos, 1);
+
+  const fmt = (n) => '$' + n.toLocaleString('en-US') + ' USD';
+
+  const planes = [
+    {
+      label: 'Web',
+      price: '$450 USD',
+      sub: 'pago único · entrega en 2 a 4 semanas',
+      best: false,
+      bullets: [
+        'Web a medida (landing o multi-sección)',
+        'Diseño mobile-first y carga rápida',
+        'Botón de WhatsApp y formulario de contacto',
+        'SEO técnico básico al publicar',
+        'Configuración de dominio y publicación',
+      ],
+    },
+    {
+      label: 'Acompañamiento',
+      price: '$850 USD',
+      sub: 'pago único · web + formación + 3 meses de mantenimiento',
+      best: true,
+      bullets: [
+        'Todo lo del plan Web',
+        'Sesión de formación para gestionarla usted mismo',
+        '3 meses de mantenimiento incluidos',
+        'Asesoría de herramientas (correo, redes, IA básica)',
+        'Soporte directo durante el acompañamiento',
+      ],
+    },
+    {
+      label: 'Mantenimiento',
+      price: '$100 USD / mes',
+      sub: 'opcional · cancelable cuando quiera',
+      best: false,
+      bullets: [
+        'Hosting, dominio y respaldos al día',
+        'Actualizaciones de seguridad',
+        'Pequeños cambios de contenido al mes',
+        'Soporte por correo o WhatsApp',
+        'Revisión de funcionamiento mensual',
+      ],
+    },
+  ];
+
+  return (
+    <section id="inversion" className="relative py-20 sm:py-32 bg-paper-50 grain">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 items-end">
+          <div className="lg:col-span-7">
+            <Reveal><Eyebrow num="04" className="text-ink-700">Inversión y retorno</Eyebrow></Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 text-[36px] sm:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.02em] text-balance">
+                No es un gasto. Es una <span className="font-display italic text-esmeralda-600">inversión que se paga sola</span>.
+              </h2>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-5">
+            <Reveal delay={140}>
+              <p className="text-[15.5px] text-ink-700 leading-relaxed text-pretty">
+                Mueva las palancas para ver cuánto podría facturar con su web nueva. Usamos números conservadores aplicables a la mayoría de PyMEs.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* Calculadora */}
+        <Reveal delay={120}>
+          <div className="mt-12 rounded-3xl bg-ink-900 text-paper-50 p-6 sm:p-10 grid lg:grid-cols-12 gap-8 relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-esmeralda-500/15 blur-3xl" />
+
+            <div className="relative lg:col-span-7 space-y-6">
+              <div className="flex items-center gap-2 stamp text-paper-300">
+                <LIcon name="Calculator" className="w-3 h-3" />
+                Calculadora de retorno
+              </div>
+
+              <div>
+                <div className="flex items-baseline justify-between">
+                  <label className="text-[13px] text-paper-300 font-mono uppercase tracking-[0.14em]">Visitas mensuales a su web</label>
+                  <span className="font-display text-[28px] text-paper-50">{visitas.toLocaleString('es-MX')}</span>
+                </div>
+                <input type="range" min="200" max="8000" step="100" value={visitas} onChange={e=>setVisitas(+e.target.value)} className="esmeralda w-full mt-3" />
+                <div className="flex justify-between text-[10.5px] text-paper-400 mt-1 font-mono">
+                  <span>200</span><span>8,000</span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-baseline justify-between">
+                  <label className="text-[13px] text-paper-300 font-mono uppercase tracking-[0.14em]">Ticket promedio por venta</label>
+                  <span className="font-display text-[28px] text-paper-50">{fmt(ticket)}</span>
+                </div>
+                <input type="range" min="50" max="2000" step="25" value={ticket} onChange={e=>setTicket(+e.target.value)} className="esmeralda w-full mt-3" />
+                <div className="flex justify-between text-[10.5px] text-paper-400 mt-1 font-mono">
+                  <span>$50 USD</span><span>$2,000 USD</span>
+                </div>
+              </div>
+
+              <div className="text-[12px] text-paper-300/80 leading-snug">
+                <LIcon name="Info" className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5 text-paper-300" />
+                Tasa de conversión asumida: 3.5% (referencia conservadora para PyMEs con web optimizada).
+              </div>
+            </div>
+
+            <div className="relative lg:col-span-5 lg:border-l lg:border-paper-50/15 lg:pl-8">
+              <div className="space-y-5">
+                <div>
+                  <div className="text-[11px] text-paper-300 font-mono uppercase tracking-[0.14em]">Ingreso estimado mensual</div>
+                  <div className="font-display text-[44px] sm:text-[56px] leading-none text-esmeralda-400 mt-1">{fmt(ingresos)}</div>
+                  <div className="text-[12px] text-paper-300 mt-1">≈ {ventas} ventas nuevas al mes</div>
+                </div>
+                <div className="h-px bg-paper-50/10" />
+                <div className="grid grid-cols-2 gap-3 text-[13px]">
+                  <div>
+                    <div className="text-paper-300 text-[11px] font-mono uppercase tracking-[0.12em]">Inversión inicial</div>
+                    <div className="text-paper-50 text-[18px] mt-0.5">desde $450 USD</div>
+                  </div>
+                  <div>
+                    <div className="text-paper-300 text-[11px] font-mono uppercase tracking-[0.12em]">Se paga en</div>
+                    <div className="text-paper-50 text-[18px] mt-0.5">{meses < 1 ? 'menos de 1 mes' : `≈ ${meses.toFixed(1)} meses`}</div>
+                  </div>
+                </div>
+                <a href="#cta" className="block text-center bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-xl py-3.5 text-[14px] font-medium transition-colors">
+                  Quiero estos números para mi negocio →
+                </a>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Planes */}
+        <div className="mt-14 grid md:grid-cols-3 gap-5">
+          {planes.map((p,i)=>(
+            <Reveal key={i} delay={i*80}>
+              <div className={`relative rounded-3xl p-6 sm:p-7 h-full lift ${p.best ? 'bg-ink-900 text-paper-50 shadow-lift' : 'bg-paper-50 border border-paper-200 text-ink-900'}`}>
+                {p.best && (
+                  <div className="absolute -top-3 right-6 bg-esmeralda-500 text-ink-950 text-[10.5px] font-mono uppercase tracking-[0.16em] px-3 py-1 rounded-full">Más elegido</div>
+                )}
+                <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] opacity-70">Plan</div>
+                <div className="font-display text-[32px] mt-1">{p.label}</div>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <div className="text-[28px] font-medium">{p.price}</div>
+                </div>
+                <div className={`text-[12.5px] ${p.best ? 'text-paper-300' : 'text-ink-700/70'}`}>{p.sub}</div>
+                <ul className="mt-6 space-y-2.5">
+                  {p.bullets.map((b,j)=>(
+                    <li key={j} className="flex gap-2.5 text-[14px]">
+                      <LIcon name="Check" className={`w-4 h-4 mt-0.5 shrink-0 ${p.best ? 'text-esmeralda-400' : 'text-esmeralda-600'}`} strokeWidth={2.4} />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a href="#cta" className={`mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[13.5px] font-medium ${p.best ? 'bg-esmeralda-500 text-ink-950 hover:bg-esmeralda-400' : 'bg-ink-900 text-paper-50 hover:bg-ink-800'}`}>
+                  Empezar con {p.label}
+                  <LIcon name="ArrowRight" className="w-4 h-4" />
+                </a>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Garantía */}
+        <Reveal delay={200}>
+          <div className="mt-10 rounded-2xl bg-paper-100 border border-paper-200 p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+            <div className="w-14 h-14 rounded-2xl bg-paper-50 border border-paper-200 flex items-center justify-center shrink-0">
+              <LIcon name="ShieldCheck" className="w-6 h-6 text-esmeralda-600" />
+            </div>
+            <div className="flex-1">
+              <div className="font-display text-[22px] leading-tight text-ink-900">Garantía de satisfacción 30 días</div>
+              <div className="text-[14px] text-ink-700 mt-1 text-pretty">Si después de un mes su web no le gusta, le devolvemos el 100% sin preguntas. Así de seguros estamos del trabajo que hacemos.</div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+window.ROI = ROI;
+
+
+// ===== parts/cta.jsx =====
+function CTA() {
+  const [form, setForm] = React.useState({ nombre: '', negocio: '', email: '', sector: 'Retail', meta: '' });
+  const [sent, setSent] = React.useState(false);
+  const [sending, setSending] = React.useState(false);
+  const [error, setError] = React.useState('');
+
+  const sectores = ['Retail', 'Servicios', 'Manufactura', 'Restauración', 'Otro'];
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!form.nombre || !form.email) return;
+    setSending(true);
+    setError('');
+    try {
+      const data = new FormData();
+      data.append('nombre', form.nombre);
+      data.append('negocio', form.negocio);
+      data.append('email', form.email);
+      data.append('sector', form.sector);
+      data.append('meta', form.meta);
+      data.append('_subject', 'Nueva solicitud de consultoría — propuesta web');
+      data.append('_template', 'table');
+      data.append('_captcha', 'false');
+      const res = await fetch('https://formsubmit.co/ajax/iapymeconsultores@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data,
+      });
+      if (!res.ok) throw new Error('No pudimos enviar su solicitud. Intente de nuevo o escríbanos a iapymeconsultores@gmail.com.');
+      setSent(true);
+    } catch (err) {
+      setError(err.message || 'Ocurrió un error. Inténtelo de nuevo.');
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <section id="cta" className="relative py-20 sm:py-32 bg-ink-950 text-paper-50 overflow-hidden">
+      <div className="absolute inset-0 hero-aurora opacity-80" />
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-6">
+            <Reveal><Eyebrow num="05" className="text-paper-300">El siguiente paso</Eyebrow></Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 text-[40px] sm:text-[60px] lg:text-[80px] leading-[0.95] tracking-[-0.02em] text-balance">
+                Una llamada de <span className="font-display italic text-esmeralda-400">30 minutos</span>. Cero compromiso.
+              </h2>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-7 text-[16.5px] sm:text-[18px] leading-relaxed text-paper-200 text-pretty max-w-[520px]">
+                Le enseñamos en vivo cómo se vería su web, le damos 3 ideas concretas para vender más esta misma semana — y si no le suena, nos despedimos como amigos.
+              </p>
+            </Reveal>
+
+            <Reveal delay={240}>
+              <ul className="mt-9 space-y-3.5">
+                {[
+                  { i: 'Clock', t: '30 minutos por videollamada o correo' },
+                  { i: 'Gift', t: 'Mini-auditoría de su presencia digital, gratis' },
+                  { i: 'Heart', t: 'En español claro, sin tecnicismos' },
+                ].map((b,i)=>(
+                  <li key={i} className="flex items-center gap-3 text-[14.5px] text-paper-100">
+                    <span className="w-9 h-9 rounded-full bg-paper-50/10 flex items-center justify-center">
+                      <LIcon name={b.i} className="w-4 h-4 text-esmeralda-400" />
+                    </span>
+                    {b.t}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={320}>
+              <div className="mt-10 flex items-center gap-4 text-[12.5px] text-paper-300">
+                <div className="flex -space-x-2">
+                  {['#10B981','#E97451','#26407A'].map((c,i)=>(
+                    <div key={i} className="w-9 h-9 rounded-full border-2 border-ink-950 flex items-center justify-center text-[10.5px] font-mono text-paper-50" style={{background:c}}>{['LM','CG','RS'][i]}</div>
+                  ))}
+                </div>
+                <div>
+                  <div className="text-paper-50">Su contacto directo</div>
+                  <div>iapymeconsultores@gmail.com — responde en menos de 24 horas</div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Form card */}
+          <div className="lg:col-span-6">
+            <Reveal delay={120}>
+              <div className="rounded-3xl bg-paper-50 text-ink-900 p-6 sm:p-8 shadow-lift">
+                {!sent ? (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <div className="font-display text-[26px] leading-tight">Agendar consultoría gratuita</div>
+                      <span className="stamp text-ink-700">Sin costo</span>
+                    </div>
+                    <p className="text-[13.5px] text-ink-700 mt-2">Le contactamos hoy mismo. Sus datos no se comparten con nadie.</p>
+
+                    <form onSubmit={submit} className="mt-6 grid sm:grid-cols-2 gap-3">
+                      <div className="sm:col-span-2">
+                        <label className="text-[12px] text-ink-700 font-mono uppercase tracking-[0.12em]">Nombre completo</label>
+                        <input className="field mt-1.5" placeholder="Su nombre" value={form.nombre} onChange={e=>setForm({...form, nombre: e.target.value})} required />
+                      </div>
+                      <div>
+                        <label className="text-[12px] text-ink-700 font-mono uppercase tracking-[0.12em]">Negocio</label>
+                        <input className="field mt-1.5" placeholder="Nombre de su negocio" value={form.negocio} onChange={e=>setForm({...form, negocio: e.target.value})} />
+                      </div>
+                      <div>
+                        <label className="text-[12px] text-ink-700 font-mono uppercase tracking-[0.12em]">Correo electrónico</label>
+                        <input type="email" className="field mt-1.5" placeholder="usted@correo.com" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} required />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-[12px] text-ink-700 font-mono uppercase tracking-[0.12em]">Sector de su negocio</label>
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {sectores.map(s=>(
+                            <button type="button" key={s} onClick={()=>setForm({...form, sector: s})} className={`text-[12.5px] px-3.5 py-1.5 rounded-full border transition-colors ${form.sector === s ? 'bg-ink-900 text-paper-50 border-ink-900' : 'bg-paper-50 text-ink-900 border-paper-200 hover:border-ink-700'}`}>{s}</button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-[12px] text-ink-700 font-mono uppercase tracking-[0.12em]">Cuéntenos su meta (opcional)</label>
+                        <textarea className="field mt-1.5 resize-none" rows={3} placeholder="Quiero recibir más prospectos al mes y tener una imagen profesional." value={form.meta} onChange={e=>setForm({...form, meta: e.target.value})} />
+                      </div>
+                      {error && (
+                        <div className="sm:col-span-2 text-[12.5px] text-terracota bg-terracota/10 border border-terracota/30 rounded-xl px-3 py-2">{error}</div>
+                      )}
+                      <button type="submit" disabled={sending} className="sm:col-span-2 mt-1 inline-flex items-center justify-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 disabled:opacity-60 disabled:cursor-not-allowed text-ink-950 rounded-xl py-3.5 text-[14.5px] font-medium transition-colors">
+                        {sending ? 'Enviando…' : 'Agendar mi llamada'}
+                        {!sending && <LIcon name="ArrowRight" className="w-4 h-4" />}
+                      </button>
+                      <div className="sm:col-span-2 flex items-center justify-center gap-1.5 text-[11.5px] text-ink-700/70">
+                        <LIcon name="Lock" className="w-3 h-3" />
+                        Sus datos se usan únicamente para contactarle.
+                      </div>
+                    </form>
+                  </>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="mx-auto w-16 h-16 rounded-full bg-esmeralda-500/15 text-esmeralda-600 flex items-center justify-center">
+                      <LIcon name="Check" className="w-8 h-8" strokeWidth={2.4} />
+                    </div>
+                    <div className="mt-5 font-display text-[30px] leading-tight">¡Listo, {form.nombre.split(' ')[0]}!</div>
+                    <p className="mt-2 text-[14.5px] text-ink-700 max-w-[380px] mx-auto">
+                      Recibimos su solicitud. Le escribiremos a <span className="font-medium text-ink-900">{form.email}</span> dentro de las próximas 24 horas para agendar.
+                    </p>
+                    <div className="mt-6 inline-flex items-center gap-2 bg-paper-100 rounded-full px-4 py-2 text-[12.5px] text-ink-700 font-mono">
+                      <span className="relative flex h-2 w-2">
+                        <span className="absolute inset-0 rounded-full bg-esmeralda-500 pulse-ring" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-esmeralda-500" />
+                      </span>
+                      Le contactaremos en breve
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+window.CTA = CTA;
+
+
+// ===== parts/footer.jsx =====
+function Footer() {
+  return (
+    <footer className="bg-ink-950 text-paper-300 border-t border-paper-50/10">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-12 sm:py-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-5">
+            <BrandMark light />
+            <p className="mt-5 text-[14px] text-paper-300 max-w-[360px] leading-relaxed text-pretty">
+              Construimos motores de venta digitales para PyMEs mexicanas. Diseño que vende, tecnología que no estorba, acompañamiento de verdad.
+            </p>
+          </div>
+          <div className="lg:col-span-3">
+            <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-paper-400">Contacto</div>
+            <ul className="mt-3 space-y-2 text-[14px]">
+              <li className="flex items-center gap-2"><LIcon name="Mail" className="w-3.5 h-3.5 text-esmeralda-400" /> <a href="mailto:iapymeconsultores@gmail.com" className="hover:text-paper-50 transition-colors">iapymeconsultores@gmail.com</a></li>
+              <li className="flex items-center gap-2"><LIcon name="Globe" className="w-3.5 h-3.5 text-esmeralda-400" /> <a href="https://iapymeconsultores.com" target="_blank" rel="noopener" className="hover:text-paper-50 transition-colors">iapymeconsultores.com</a></li>
+              <li className="flex items-center gap-2"><LIcon name="MapPin" className="w-3.5 h-3.5 text-esmeralda-400" /> México</li>
+            </ul>
+          </div>
+          <div className="lg:col-span-4">
+            <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-paper-400">Esta propuesta</div>
+            <ul className="mt-3 space-y-2 text-[14px]">
+              <li><a href="#problema" className="hover:text-paper-50 transition-colors">El problema</a></li>
+              <li><a href="#metodo" className="hover:text-paper-50 transition-colors">Método</a></li>
+              <li><a href="#muebleria" className="hover:text-paper-50 transition-colors">Ejemplo de proyecto</a></li>
+              <li><a href="#inversion" className="hover:text-paper-50 transition-colors">Inversión y retorno</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-6 border-t border-paper-50/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-[12px] text-paper-400 font-mono">
+          <div>© 2026 iapymeconsultores</div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+window.Footer = Footer;
+
+
+// ===== parts/app.jsx =====
+function App() {
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Problema />
+        <Metodo />
+        <Muebleria />
+        <ROI />
+        <CTA />
+      </main>
+      <Footer />
+      <WhatsappFab />
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+  </script>
+</body>
+</html>
