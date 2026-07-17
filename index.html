@@ -216,6 +216,27 @@ function BrandMark({ light = false, className = "" }) {
 }
 window.BrandMark = BrandMark;
 
+// Correo de contacto + generador de enlaces mailto (contacto directo, sin backend)
+const CONTACT_EMAIL = "iapymeconsultores@gmail.com";
+function buildMailto(subject, body) {
+  const parts = [];
+  if (subject) parts.push('subject=' + encodeURIComponent(subject));
+  if (body) parts.push('body=' + encodeURIComponent(body));
+  return 'mailto:' + CONTACT_EMAIL + (parts.length ? '?' + parts.join('&') : '');
+}
+window.buildMailto = buildMailto;
+
+// Logo oficial de iapymeconsultores (PNG transparente, sin recuadro).
+// Sobre fondo oscuro usamos la versión monocroma blanca; sobre fondo
+// claro, la versión a color. Así se integra sin caja de fondo.
+function BrandLogo({ onDark = false, className = "", imgClass = "h-8 sm:h-9" }) {
+  const src = onDark ? "img/logos/iapyme-white.png" : "img/logos/iapyme.png";
+  return (
+    <img src={src} alt="iapymeconsultores" className={`${imgClass} w-auto ${className}`} />
+  );
+}
+window.BrandLogo = BrandLogo;
+
 // Reveal-on-scroll wrapper
 function Reveal({ children, delay = 0, as: As = 'div', className = '' }) {
   const ref = React.useRef(null);
@@ -265,6 +286,80 @@ function ImagePlaceholder({ ratio = '4/3', label = 'Imagen', className = '', ton
 window.ImagePlaceholder = ImagePlaceholder;
 
 
+// ===== parts/logos.jsx =====
+// Clientes destacados. Las imágenes viven en img/logos/*.
+// Si un archivo falta, se muestra un respaldo elegante con el nombre de la marca.
+const CLIENT_LOGOS = [
+  { name: 'Iberdrola',    file: 'img/logos/iberdrola.png' },
+  { name: 'Petronor',     file: 'img/logos/petronor.png' },
+  { name: 'Meliá Hotels', file: 'img/logos/melia.png' },
+  { name: 'Bizkaia',      file: 'img/logos/bizkaia.png' },
+  { name: 'Tidio',        file: 'img/logos/tidio.png' },
+  { name: 'CuadraBus',    file: 'img/logos/cuadrabus.png' },
+  { name: 'Lanbide',      file: 'img/logos/lanbide.png' },
+  { name: 'Gaztenpresa',  file: 'img/logos/gaztenpresa.png' },
+  { name: 'Lokalia',      file: 'img/logos/lokalia.png' },
+];
+
+function LogoPill({ item }) {
+  const [failed, setFailed] = React.useState(false);
+  return (
+    <div className="shrink-0 mx-2.5 sm:mx-3.5 h-14 sm:h-16 w-[132px] sm:w-[150px] rounded-2xl flex items-center justify-center px-4"
+         style={{
+           background: 'rgba(255,255,255,0.72)',
+           backdropFilter: 'blur(12px) saturate(140%)',
+           WebkitBackdropFilter: 'blur(12px) saturate(140%)',
+           border: '1px solid rgba(255,255,255,0.65)',
+           boxShadow: '0 1px 1px rgba(255,255,255,.6) inset, 0 8px 24px -14px rgba(10,21,48,.5)',
+         }}>
+      {!failed ? (
+        <img
+          src={item.file}
+          alt={item.name}
+          loading="lazy"
+          onError={() => setFailed(true)}
+          className="max-h-8 sm:max-h-9 max-w-full w-auto object-contain"
+          style={{ filter: 'saturate(1.02)' }}
+        />
+      ) : (
+        <span className="font-display italic text-[19px] sm:text-[21px] leading-none text-ink-800/85 text-center">{item.name}</span>
+      )}
+    </div>
+  );
+}
+
+function ClientLogos({ dark = false }) {
+  const items = [...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS];
+  return (
+    <section className={`relative overflow-hidden py-12 sm:py-16 grain ${dark ? 'bg-ink-950 text-paper-50' : 'bg-paper-100 text-ink-900'}`}>
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8">
+        <Reveal>
+          <div className="text-center">
+            <div className={`font-mono text-[11px] uppercase tracking-[0.18em] ${dark ? 'text-paper-300' : 'text-ink-700/70'}`}>
+              Han confiado en nosotros
+            </div>
+            <h3 className="mt-3 text-[24px] sm:text-[32px] leading-tight text-balance font-display">
+              Marcas que ya trabajan con <span className="italic text-esmeralda-500">nosotros</span>
+            </h3>
+            <p className={`mt-2 text-[13.5px] sm:text-[14.5px] ${dark ? 'text-paper-300' : 'text-ink-700/80'}`}>
+              Estos son solo los <span className={dark ? 'text-paper-50 font-medium' : 'text-ink-900 font-medium'}>más destacados</span>, además de otros <span className={dark ? 'text-paper-50 font-medium' : 'text-ink-900 font-medium'}>más de 50 clientes</span>.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Carrusel liquid glass */}
+      <div className="relative mt-8 sm:mt-10 marquee-mask overflow-hidden">
+        <div className="marquee-track flex w-max items-center">
+          {items.map((it, i) => <LogoPill key={i} item={it} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+window.ClientLogos = ClientLogos;
+
+
 // ===== parts/nav.jsx =====
 function Nav({ active }) {
   const [open, setOpen] = React.useState(false);
@@ -281,12 +376,13 @@ function Nav({ active }) {
     { href: '#metodo',   label: 'Método' },
     { href: '#muebleria',label: 'Mockup' },
     { href: '#inversion',label: 'Inversión' },
+    { href: '#servicios',label: 'IA & Innovación' },
   ];
 
   return (
     <header className={`fixed top-0 inset-x-0 z-40 transition-all duration-500 ${scrolled ? 'bg-paper-50/85 backdrop-blur-md border-b border-paper-200 text-ink-900' : 'bg-ink-950/70 backdrop-blur-md border-b border-paper-50/10 text-paper-50'}`}>
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 sm:h-[72px] flex items-center justify-between">
-        <a href="#top" className="shrink-0"><BrandMark light={!scrolled} /></a>
+        <a href="#top" className="shrink-0"><BrandLogo onDark={!scrolled} /></a>
 
         <nav className={`hidden md:flex items-center gap-8 text-[13.5px] ${scrolled ? 'text-ink-900' : 'text-paper-50'}`}>
           {links.map(l => (
@@ -302,9 +398,9 @@ function Nav({ active }) {
             </span>
             Disponibles esta semana
           </span>
-          <a href="#cta" className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13.5px] font-medium transition-colors ${scrolled ? 'bg-ink-900 text-paper-50 hover:bg-ink-800' : 'bg-esmeralda-500 text-ink-950 hover:bg-esmeralda-400'}`}>
-            Agendar consultoría
-            <LIcon name="ArrowUpRight" className="w-4 h-4" />
+          <a href={buildMailto('Quiero agendar una consultoría gratuita', 'Hola, me gustaría agendar una consultoría gratuita para mi negocio.\n\nNombre:\nNegocio:\nSector:\nQué me gustaría conseguir:\n')} className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13.5px] font-medium transition-colors ${scrolled ? 'bg-ink-900 text-paper-50 hover:bg-ink-800' : 'bg-esmeralda-500 text-ink-950 hover:bg-esmeralda-400'}`}>
+            Escríbenos
+            <LIcon name="Mail" className="w-4 h-4" />
           </a>
         </div>
 
@@ -322,9 +418,9 @@ function Nav({ active }) {
               <LIcon name="ArrowRight" className="w-4 h-4 opacity-50" />
             </a>
           ))}
-          <a href="#cta" onClick={() => setOpen(false)} className="mt-2 flex items-center justify-center gap-2 bg-ink-900 text-paper-50 rounded-xl px-4 py-3.5 text-[14px] font-medium">
-            Agendar consultoría gratuita
-            <LIcon name="ArrowUpRight" className="w-4 h-4" />
+          <a href={buildMailto('Quiero agendar una consultoría gratuita', 'Hola, me gustaría agendar una consultoría gratuita para mi negocio.\n\nNombre:\nNegocio:\nSector:\nQué me gustaría conseguir:\n')} onClick={() => setOpen(false)} className="mt-2 flex items-center justify-center gap-2 bg-ink-900 text-paper-50 rounded-xl px-4 py-3.5 text-[14px] font-medium">
+            Escríbenos por correo
+            <LIcon name="Mail" className="w-4 h-4" />
           </a>
         </nav>
       </div>
@@ -348,7 +444,7 @@ function WhatsappFab() {
               <div className="text-[13px] font-medium">Equipo iapyme</div>
               <div className="text-[11px] opacity-80 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-esmeralda-400" />
-                En línea — respondemos en menos de 24 h
+                En línea, respondemos en menos de 24 h
               </div>
             </div>
           </div>
@@ -356,8 +452,9 @@ function WhatsappFab() {
             <div className="bg-paper-100 rounded-xl rounded-tl-sm px-3 py-2 text-[13px] text-ink-900 max-w-[85%]">
               ¡Qué gusto! Cuéntenos del negocio y le mandamos una propuesta a su medida en cuanto la veamos.
             </div>
-            <a href="#cta" onClick={() => setOpen(false)} className="block text-center bg-esmeralda-500 hover:bg-esmeralda-600 text-paper-50 rounded-xl py-2.5 text-[13px] font-medium">
-              Iniciar conversación
+            <a href={buildMailto('Hola iapymeconsultores', 'Hola, cuéntenos un poco de su negocio:\n\nNombre:\nNegocio:\nQué necesita:\n')} onClick={() => setOpen(false)} className="flex items-center justify-center gap-2 text-center bg-esmeralda-500 hover:bg-esmeralda-600 text-paper-50 rounded-xl py-2.5 text-[13px] font-medium">
+              <LIcon name="Mail" className="w-4 h-4" />
+              Escribir un correo
             </a>
           </div>
         </div>
@@ -397,7 +494,7 @@ function Hero() {
           <div className="lg:col-span-12">
             <Reveal delay={80}>
               <h1 className="text-[42px] sm:text-[64px] lg:text-[88px] leading-[0.95] tracking-[-0.02em] text-balance">
-                Su negocio merece <span className="font-display italic text-esmeralda-400">vender en línea</span> — sin volverse un experto en tecnología.
+                Su negocio merece <span className="font-display italic text-esmeralda-400">vender en línea</span>, sin volverse un experto en tecnología.
               </h1>
             </Reveal>
             <Reveal delay={180}>
@@ -408,10 +505,10 @@ function Hero() {
 
             <Reveal delay={280}>
               <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
-                <a href="#cta" className="group inline-flex items-center justify-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-full pl-6 pr-2 py-2 text-[15px] font-medium transition-colors">
+                <a href={buildMailto('Quiero mi consultoría gratis', 'Hola, me gustaría agendar una consultoría gratuita para mi negocio.\n\nNombre:\nNegocio:\nSector:\nQué me gustaría conseguir:\n')} className="group inline-flex items-center justify-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-full pl-6 pr-2 py-2 text-[15px] font-medium transition-colors">
                   Agendar mi consultoría gratis
                   <span className="ml-1 w-9 h-9 rounded-full bg-ink-950 text-paper-50 flex items-center justify-center transition-transform group-hover:rotate-45">
-                    <LIcon name="ArrowUpRight" className="w-4 h-4" />
+                    <LIcon name="Mail" className="w-4 h-4" />
                   </span>
                 </a>
                 <a href="#muebleria" className="inline-flex items-center justify-center gap-2 text-paper-100 hover:text-paper-50 px-2 py-3 text-[14px]">
@@ -490,7 +587,7 @@ function Problema() {
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-6 text-[16.5px] sm:text-[18px] leading-relaxed text-ink-700 text-pretty max-w-[480px]">
-                Su producto es bueno, su servicio es legendario y los clientes lo recomiendan. Pero cada vez que alguien busca su tipo de negocio en Google y no lo encuentra, esa venta se la lleva alguien más. Sin drama, sin maldad — así es el mercado hoy.
+                Su producto es bueno, su servicio es legendario y los clientes lo recomiendan. Pero cada vez que alguien busca su tipo de negocio en Google y no lo encuentra, esa venta se la lleva alguien más. Sin drama, sin maldad. Así es el mercado hoy.
               </p>
             </Reveal>
             <Reveal delay={240}>
@@ -499,7 +596,7 @@ function Problema() {
                   <LIcon name="Compass" className="w-5 h-5" />
                 </div>
                 <div className="text-[14px] text-ink-700 max-w-[300px]">
-                  La buena noticia: la gran mayoría de sus competidores tampoco lo está haciendo bien. <span className="text-ink-900 font-medium">Hay ventana — pero se está cerrando.</span>
+                  La buena noticia: la gran mayoría de sus competidores tampoco lo está haciendo bien. <span className="text-ink-900 font-medium">Hay ventana, pero se está cerrando.</span>
                 </div>
               </div>
             </Reveal>
@@ -560,7 +657,7 @@ function Problema() {
                   <div className="bg-paper-50 p-6 h-full lift">
                     <div className="font-display text-[44px] leading-none text-ink-900">{s.k}</div>
                     <div className="mt-3 text-[14px] text-ink-700 leading-snug">{s.v}</div>
-                    <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-700/50">— {s.src}</div>
+                    <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-700/50">{s.src}</div>
                   </div>
                 </Reveal>
               ))}
@@ -582,7 +679,7 @@ function Metodo() {
       icon: 'PenTool',
       label: 'Diseño a medida',
       kicker: 'Su marca, no una plantilla',
-      desc: 'Diseñamos cada sección pensando en cómo compra su cliente real. Su web no se va a parecer a la del vecino — porque su negocio tampoco.',
+      desc: 'Diseñamos cada sección pensando en cómo compra su cliente real. Su web no se va a parecer a la del vecino, porque su negocio tampoco.',
       bullets: ['Identidad visual coherente', 'Fotografía profesional opcional', 'Mensajes que conectan, no que aburren'],
     },
     {
@@ -603,7 +700,7 @@ function Metodo() {
       icon: 'Settings2',
       label: 'Autogestionable',
       kicker: 'Si lo desea, sin depender de nadie',
-      desc: 'Le entregamos un panel sencillo para que cambie precios, suba productos o publique promociones — en 5 minutos, sin código.',
+      desc: 'Le entregamos un panel sencillo para que cambie precios, suba productos o publique promociones en 5 minutos, sin código.',
       bullets: ['Panel en español, sin tecnicismos', 'Capacitación grabada de 30 minutos', 'Soporte por WhatsApp incluido'],
     },
   ];
@@ -632,7 +729,7 @@ function Metodo() {
           <div className="lg:col-span-5">
             <Reveal delay={140}>
               <p className="text-[15.5px] text-paper-300 leading-relaxed text-pretty">
-                No vendemos páginas. Vendemos máquinas de prospección que trabajan para usted las 24 horas. Cada pilar tiene un porqué — y se nota en su caja registradora.
+                No vendemos páginas. Vendemos máquinas de prospección que trabajan para usted las 24 horas. Cada pilar tiene un porqué, y se nota en su caja registradora.
               </p>
             </Reveal>
           </div>
@@ -726,14 +823,14 @@ function Muebleria() {
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-6 text-[16.5px] leading-relaxed text-ink-700 text-pretty max-w-[480px]">
-                Este es un ejemplo ilustrativo aplicado al sector retail. Lo adaptamos a su giro: catálogo, servicios, reservas, contacto directo — el formato cambia, el método de venta es el mismo. Toque cada pestaña para verlo en movimiento.
+                Este es un ejemplo ilustrativo aplicado al sector retail. Lo adaptamos a su giro: catálogo, servicios, reservas, contacto directo. El formato cambia, el método de venta es el mismo. Toque cada pestaña para verlo en movimiento.
               </p>
             </Reveal>
 
             <Reveal delay={240}>
               <ul className="mt-8 space-y-4">
                 {[
-                  { i: 'Camera', t: 'Galería de producto o servicio', d: 'Sus piezas en escenarios reales, su equipo trabajando, sus instalaciones — lo que más convenza a su cliente.' },
+                  { i: 'Camera', t: 'Galería de producto o servicio', d: 'Sus piezas en escenarios reales, su equipo trabajando, sus instalaciones, lo que más convenza a su cliente.' },
                   { i: 'Tags', t: 'Catálogo o secciones con filtros', d: 'Filtros pensados para su giro: estilo, precio, ubicación, disponibilidad. El cliente llega listo para decidir.' },
                   { i: 'Calculator', t: 'Información clara de precios', d: 'Tarifas, mensualidades o paquetes visibles. Menos preguntas repetidas, más decisiones rápidas.' },
                   { i: 'Truck', t: 'Cobertura o zona de servicio', d: 'Mapa con sus zonas de cobertura, sucursales o entregas. Cero llamadas para preguntar lo mismo.' },
@@ -870,7 +967,7 @@ function Muebleria() {
 
                     <div className="rounded-2xl border border-dashed border-paper-300 p-4 text-[12.5px] text-ink-700 leading-snug bg-paper-50/50">
                       <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-700/60">Nota del diseñador</span>
-                      <p className="mt-1.5">Este mockup es ilustrativo. En la consultoría definimos juntos los colores, secciones y contenido reales de su negocio — sea retail, servicios, manufactura o restauración.</p>
+                      <p className="mt-1.5">Este mockup es ilustrativo. En la consultoría definimos juntos los colores, secciones y contenido reales de su negocio, sea retail, servicios, manufactura o restauración.</p>
                     </div>
                   </div>
                 </div>
@@ -1062,49 +1159,38 @@ function ROI() {
   const conv = 0.035; // 3.5% lead → cliente
   const ventas = Math.round(visitas * conv);
   const ingresos = ventas * ticket;
-  const inversion = 850;
+  const inversion = 450;
   const meses = inversion / Math.max(ingresos, 1);
 
   const fmt = (n) => '$' + n.toLocaleString('en-US') + ' USD';
 
-  const planes = [
+  const productos = [
     {
-      label: 'Web',
-      price: '$450 USD',
-      sub: 'pago único · entrega en 2 a 4 semanas',
-      best: false,
+      label: 'Landing page',
+      tag: 'Una página que capta clientes',
+      base: 450,
+      pro: 850,
+      desc: 'Su web de presentación: una página bien estructurada que atrae visitas desde Google y las convierte en prospectos por WhatsApp.',
       bullets: [
-        'Web a medida (landing o multi-sección)',
-        'Diseño mobile-first y carga rápida',
+        'Diseño a medida (una o varias secciones)',
+        'Mobile-first y carga rápida',
         'Botón de WhatsApp y formulario de contacto',
         'SEO técnico básico al publicar',
-        'Configuración de dominio y publicación',
+        'Dominio, publicación y puesta en marcha',
       ],
     },
     {
-      label: 'Acompañamiento',
-      price: '$850 USD',
-      sub: 'pago único · web + formación + 3 meses de mantenimiento',
-      best: true,
+      label: 'Punto de venta',
+      tag: 'Su catálogo vendiendo en línea',
+      base: 700,
+      pro: 1150,
+      desc: 'Una tienda o catálogo en línea: sus productos con ficha, filtros y pedidos directos a su WhatsApp. Usted gestiona todo desde un panel.',
       bullets: [
-        'Todo lo del plan Web',
-        'Sesión de formación para gestionarla usted mismo',
-        '3 meses de mantenimiento incluidos',
-        'Asesoría de herramientas (correo, redes, IA básica)',
-        'Soporte directo durante el acompañamiento',
-      ],
-    },
-    {
-      label: 'Mantenimiento',
-      price: '$100 USD / mes',
-      sub: 'opcional · cancelable cuando quiera',
-      best: false,
-      bullets: [
-        'Hosting, dominio y respaldos al día',
-        'Actualizaciones de seguridad',
-        'Pequeños cambios de contenido al mes',
-        'Soporte por correo o WhatsApp',
-        'Revisión de funcionamiento mensual',
+        'Todo lo de la Landing page',
+        'Catálogo de productos con fichas y filtros',
+        'Pedidos y apartados directos por WhatsApp',
+        'Panel para gestionar productos y precios',
+        'Estructura pensada para escalar el catálogo',
       ],
     },
   ];
@@ -1187,7 +1273,7 @@ function ROI() {
                     <div className="text-paper-50 text-[18px] mt-0.5">{meses < 1 ? 'menos de 1 mes' : `≈ ${meses.toFixed(1)} meses`}</div>
                   </div>
                 </div>
-                <a href="#cta" className="block text-center bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-xl py-3.5 text-[14px] font-medium transition-colors">
+                <a href={buildMailto('Quiero estos números para mi negocio', 'Hola, vi la calculadora de retorno en su propuesta y me gustaría verlo aplicado a mi negocio.\n\nNombre:\nNegocio:\nSector:\n')} className="block text-center bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-xl py-3.5 text-[14px] font-medium transition-colors">
                   Quiero estos números para mi negocio →
                 </a>
               </div>
@@ -1195,36 +1281,111 @@ function ROI() {
           </div>
         </Reveal>
 
-        {/* Planes */}
-        <div className="mt-14 grid md:grid-cols-3 gap-5">
-          {planes.map((p,i)=>(
-            <Reveal key={i} delay={i*80}>
-              <div className={`relative rounded-3xl p-6 sm:p-7 h-full lift ${p.best ? 'bg-ink-900 text-paper-50 shadow-lift' : 'bg-paper-50 border border-paper-200 text-ink-900'}`}>
-                {p.best && (
-                  <div className="absolute -top-3 right-6 bg-esmeralda-500 text-ink-950 text-[10.5px] font-mono uppercase tracking-[0.16em] px-3 py-1 rounded-full">Más elegido</div>
-                )}
-                <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] opacity-70">Plan</div>
-                <div className="font-display text-[32px] mt-1">{p.label}</div>
-                <div className="mt-4 flex items-baseline gap-2">
-                  <div className="text-[28px] font-medium">{p.price}</div>
+        {/* Productos: Landing page y Punto de venta, cada uno con su versión Pro */}
+        <div className="mt-14 grid md:grid-cols-2 gap-5">
+          {productos.map((p,i)=>(
+            <Reveal key={i} delay={i*90}>
+              <div className="relative rounded-3xl p-6 sm:p-8 h-full lift bg-paper-50 border border-paper-200 text-ink-900 flex flex-col">
+                <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-700/60">{p.tag}</div>
+                <div className="font-display text-[34px] leading-none mt-1.5">{p.label}</div>
+                <div className="mt-3 flex items-baseline gap-2">
+                  <div className="text-[38px] font-medium leading-none">${p.base.toLocaleString('en-US')}</div>
+                  <div className="text-[14px] text-ink-700/70">USD · pago único</div>
                 </div>
-                <div className={`text-[12.5px] ${p.best ? 'text-paper-300' : 'text-ink-700/70'}`}>{p.sub}</div>
+                <p className="mt-4 text-[14px] text-ink-700 leading-relaxed text-pretty">{p.desc}</p>
                 <ul className="mt-6 space-y-2.5">
                   {p.bullets.map((b,j)=>(
                     <li key={j} className="flex gap-2.5 text-[14px]">
-                      <LIcon name="Check" className={`w-4 h-4 mt-0.5 shrink-0 ${p.best ? 'text-esmeralda-400' : 'text-esmeralda-600'}`} strokeWidth={2.4} />
+                      <LIcon name="Check" className="w-4 h-4 mt-0.5 shrink-0 text-esmeralda-600" strokeWidth={2.4} />
                       <span>{b}</span>
                     </li>
                   ))}
                 </ul>
-                <a href="#cta" className={`mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[13.5px] font-medium ${p.best ? 'bg-esmeralda-500 text-ink-950 hover:bg-esmeralda-400' : 'bg-ink-900 text-paper-50 hover:bg-ink-800'}`}>
-                  Empezar con {p.label}
-                  <LIcon name="ArrowRight" className="w-4 h-4" />
+
+                {/* Bloque versión Pro */}
+                <div className="mt-6 rounded-2xl bg-ink-900 text-paper-50 p-5 relative overflow-hidden">
+                  <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-esmeralda-500/20 blur-2xl" />
+                  <div className="relative">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="bg-esmeralda-500 text-ink-950 text-[10px] font-mono uppercase tracking-[0.16em] px-2.5 py-1 rounded-full">Pro</span>
+                        <span className="text-[13px] text-paper-200">{p.label} Pro</span>
+                      </div>
+                      <div className="text-[26px] font-medium leading-none">${p.pro.toLocaleString('en-US')}<span className="text-[12px] font-normal text-paper-300"> USD</span></div>
+                    </div>
+                    <div className="mt-3 space-y-2 text-[13.5px] text-paper-100">
+                      <div className="flex gap-2.5">
+                        <LIcon name="GraduationCap" className="w-4 h-4 mt-0.5 shrink-0 text-esmeralda-400" />
+                        <span>Pack de <span className="text-paper-50 font-medium">formación</span> para gestionar la web usted mismo</span>
+                      </div>
+                      <div className="flex gap-2.5">
+                        <LIcon name="Wrench" className="w-4 h-4 mt-0.5 shrink-0 text-esmeralda-400" />
+                        <span><span className="text-paper-50 font-medium">3 meses de mantenimiento</span> incluidos (valor $300)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <a href={buildMailto('Me interesa: ' + p.label + ' ($' + p.base.toLocaleString('en-US') + ' USD)', 'Hola, me interesa el plan "' + p.label + '" ($' + p.base.toLocaleString('en-US') + ' USD) de su propuesta.\n\n¿Me interesa la versión Pro (formación + 3 meses de mantenimiento) por $' + p.pro.toLocaleString('en-US') + ' USD?: (sí / no)\n\nNombre:\nNegocio:\nSector:\n')} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[13.5px] font-medium bg-ink-900 text-paper-50 hover:bg-ink-800 transition-colors">
+                  Quiero {p.label}
+                  <LIcon name="Mail" className="w-4 h-4" />
                 </a>
               </div>
             </Reveal>
           ))}
         </div>
+
+        {/* Mantenimiento + nota de dominio/hosting */}
+        <Reveal delay={120}>
+          <div className="mt-5 grid md:grid-cols-2 gap-5">
+            <div className="rounded-3xl bg-paper-50 border border-paper-200 p-6 sm:p-7 flex flex-col">
+              <div className="flex items-center justify-between">
+                <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-700/60">Opcional · cancelable</div>
+                <span className="w-10 h-10 rounded-xl bg-esmeralda-500/12 text-esmeralda-700 flex items-center justify-center"><LIcon name="LifeBuoy" className="w-5 h-5" /></span>
+              </div>
+              <div className="font-display text-[30px] leading-none mt-2">Mantenimiento</div>
+              <div className="mt-2 flex items-baseline gap-2">
+                <div className="text-[30px] font-medium leading-none">$100</div>
+                <div className="text-[14px] text-ink-700/70">USD / mes</div>
+              </div>
+              <ul className="mt-5 space-y-2.5">
+                {[
+                  'Resolución de errores en la web',
+                  'Actualizaciones y seguridad al día',
+                  'Hosting, dominio y respaldos gestionados',
+                  'Pequeños cambios de contenido al mes',
+                ].map((b,j)=>(
+                  <li key={j} className="flex gap-2.5 text-[14px]">
+                    <LIcon name="Check" className="w-4 h-4 mt-0.5 shrink-0 text-esmeralda-600" strokeWidth={2.4} />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 text-[12.5px] text-ink-700/70">Los planes <span className="font-medium text-ink-900">Pro</span> ya incluyen los 3 primeros meses.</div>
+            </div>
+
+            <div className="rounded-3xl bg-paper-100 border border-paper-200 p-6 sm:p-7 flex flex-col justify-center">
+              <div className="flex items-center gap-2 text-ink-700/70">
+                <LIcon name="Info" className="w-4 h-4" />
+                <span className="font-mono text-[10.5px] uppercase tracking-[0.18em]">Si prefiere gestionarlo por su cuenta</span>
+              </div>
+              <p className="mt-4 text-[15px] text-ink-800 leading-relaxed text-pretty">
+                Sin plan de mantenimiento, usted solo asume los costes de tener la web en línea:
+              </p>
+              <div className="mt-5 grid grid-cols-2 gap-4">
+                <div className="rounded-2xl bg-paper-50 border border-paper-200 p-4">
+                  <div className="flex items-center gap-2 text-ink-700"><LIcon name="Globe" className="w-4 h-4 text-esmeralda-600" /><span className="text-[12px] font-mono uppercase tracking-[0.12em]">Dominio</span></div>
+                  <div className="mt-2 text-[22px] font-medium text-ink-900">≈ $20 <span className="text-[13px] font-normal text-ink-700">/ año</span></div>
+                </div>
+                <div className="rounded-2xl bg-paper-50 border border-paper-200 p-4">
+                  <div className="flex items-center gap-2 text-ink-700"><LIcon name="Server" className="w-4 h-4 text-esmeralda-600" /><span className="text-[12px] font-mono uppercase tracking-[0.12em]">Hosting</span></div>
+                  <div className="mt-2 text-[22px] font-medium text-ink-900">≈ $20 <span className="text-[13px] font-normal text-ink-700">/ mes</span></div>
+                </div>
+              </div>
+              <p className="mt-4 text-[12.5px] text-ink-700/70">Cifras aproximadas. Le ayudamos a contratarlos y dejarlos configurados.</p>
+            </div>
+          </div>
+        </Reveal>
 
         {/* Garantía */}
         <Reveal delay={200}>
@@ -1245,42 +1406,124 @@ function ROI() {
 window.ROI = ROI;
 
 
+// ===== parts/servicios.jsx =====
+function MasServicios() {
+  const servicios = [
+    {
+      icon: 'BrainCircuit',
+      title: 'Consultoría en IA',
+      desc: 'Analizamos su negocio y detectamos dónde la inteligencia artificial le ahorra horas y le hace ganar dinero, sin humo y con casos concretos.',
+      points: ['Diagnóstico de oportunidades', 'Hoja de ruta priorizada', 'Herramientas recomendadas a su medida'],
+    },
+    {
+      icon: 'GraduationCap',
+      title: 'Formaciones a medida',
+      desc: 'Capacitamos a su equipo para usar IA en el día a día: redactar, atender clientes, analizar datos y producir más en menos tiempo.',
+      points: ['Talleres prácticos para su equipo', 'Material y plantillas reutilizables', 'En español claro, sin tecnicismos'],
+    },
+    {
+      icon: 'Workflow',
+      title: 'Automatización de procesos',
+      desc: 'Conectamos sus herramientas y automatizamos tareas repetitivas: presupuestos, seguimiento de leads, respuestas y reportes.',
+      points: ['Flujos que trabajan solos', 'Menos errores manuales', 'Integración con lo que ya usa'],
+    },
+    {
+      icon: 'Lightbulb',
+      title: 'Innovación cerrada',
+      desc: 'Acompañamiento estratégico para innovar puertas adentro: mejoramos sus procesos internos con tecnología, a su ritmo y con confidencialidad.',
+      points: ['Proyectos a puerta cerrada', 'Confidencialidad total', 'Acompañamiento estratégico continuo'],
+    },
+  ];
+
+  return (
+    <section id="servicios" className="relative py-20 sm:py-32 bg-paper-100 grain overflow-hidden">
+      <div className="absolute -top-32 right-0 w-[420px] h-[420px] rounded-full bg-esmeralda-500/8 blur-3xl" />
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 items-end">
+          <div className="lg:col-span-7">
+            <Reveal><Eyebrow num="05" className="text-ink-700">Más allá de las webs</Eyebrow></Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 text-[36px] sm:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.02em] text-balance">
+                No solo hacemos webs. Le ayudamos a <span className="font-display italic text-esmeralda-600">innovar con IA</span>.
+              </h2>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-5">
+            <Reveal delay={140}>
+              <p className="text-[15.5px] text-ink-700 leading-relaxed text-pretty">
+                En <span className="font-medium text-ink-900">iapymeconsultores</span> también trabajamos la consultoría y la formación en inteligencia artificial e innovación. Ponemos la tecnología a trabajar dentro de su empresa, no para presumir, sino para que produzca.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {servicios.map((s,i)=>(
+            <Reveal key={i} delay={i*80}>
+              <div className="h-full rounded-3xl bg-paper-50 border border-paper-200 p-6 lift">
+                <div className="w-12 h-12 rounded-2xl bg-ink-900 text-paper-50 flex items-center justify-center">
+                  <LIcon name={s.icon} className="w-5 h-5" />
+                </div>
+                <div className="mt-5 font-display text-[24px] leading-tight text-ink-900">{s.title}</div>
+                <p className="mt-3 text-[13.5px] text-ink-700 leading-relaxed text-pretty">{s.desc}</p>
+                <ul className="mt-5 space-y-2">
+                  {s.points.map((pt,j)=>(
+                    <li key={j} className="flex gap-2.5 text-[13px] text-ink-800">
+                      <LIcon name="Check" className="w-3.5 h-3.5 mt-0.5 shrink-0 text-esmeralda-600" strokeWidth={2.4} />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={160}>
+          <div className="mt-10 rounded-2xl bg-ink-900 text-paper-50 p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-esmeralda-500/15 text-esmeralda-400 flex items-center justify-center shrink-0">
+                <LIcon name="Sparkles" className="w-6 h-6" />
+              </div>
+              <div className="text-[14.5px] text-paper-100 max-w-[560px] text-pretty">
+                ¿No sabe por dónde empezar con la IA en su negocio? La primera consultoría de diagnóstico es <span className="text-paper-50 font-medium">gratuita</span>.
+              </div>
+            </div>
+            <a href={buildMailto('Quiero un diagnóstico de IA para mi negocio', 'Hola, me interesa la consultoría / formación en IA e innovación. Me gustaría empezar por el diagnóstico gratuito.\n\nNombre:\nNegocio:\nQué me gustaría mejorar con IA:\n')} className="shrink-0 inline-flex items-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-full px-5 py-3 text-[14px] font-medium transition-colors">
+              Hablemos de IA
+              <LIcon name="Mail" className="w-4 h-4" />
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+window.MasServicios = MasServicios;
+
+
 // ===== parts/cta.jsx =====
 function CTA() {
   const [form, setForm] = React.useState({ nombre: '', negocio: '', email: '', sector: 'Retail', meta: '' });
   const [sent, setSent] = React.useState(false);
-  const [sending, setSending] = React.useState(false);
   const [error, setError] = React.useState('');
 
   const sectores = ['Retail', 'Servicios', 'Manufactura', 'Restauración', 'Otro'];
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault();
     if (!form.nombre || !form.email) return;
-    setSending(true);
     setError('');
-    try {
-      const data = new FormData();
-      data.append('nombre', form.nombre);
-      data.append('negocio', form.negocio);
-      data.append('email', form.email);
-      data.append('sector', form.sector);
-      data.append('meta', form.meta);
-      data.append('_subject', 'Nueva solicitud de consultoría — propuesta web');
-      data.append('_template', 'table');
-      data.append('_captcha', 'false');
-      const res = await fetch('https://formsubmit.co/ajax/iapymeconsultores@gmail.com', {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: data,
-      });
-      if (!res.ok) throw new Error('No pudimos enviar su solicitud. Intente de nuevo o escríbanos a iapymeconsultores@gmail.com.');
-      setSent(true);
-    } catch (err) {
-      setError(err.message || 'Ocurrió un error. Inténtelo de nuevo.');
-    } finally {
-      setSending(false);
-    }
+    // Sin backend: abrimos el correo del usuario ya redactado hacia iapymeconsultores.
+    const body =
+      'Hola, me gustaría agendar una consultoría gratuita.\n\n' +
+      'Nombre: ' + form.nombre + '\n' +
+      'Negocio: ' + (form.negocio || '(sin especificar)') + '\n' +
+      'Correo de contacto: ' + form.email + '\n' +
+      'Sector: ' + form.sector + '\n' +
+      'Meta: ' + (form.meta || '(sin especificar)') + '\n';
+    window.location.href = buildMailto('Solicitud de consultoría: ' + (form.negocio || form.nombre), body);
+    setSent(true);
   };
 
   return (
@@ -1289,7 +1532,7 @@ function CTA() {
       <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8">
         <div className="grid lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-6">
-            <Reveal><Eyebrow num="05" className="text-paper-300">El siguiente paso</Eyebrow></Reveal>
+            <Reveal><Eyebrow num="06" className="text-paper-300">El siguiente paso</Eyebrow></Reveal>
             <Reveal delay={80}>
               <h2 className="mt-6 text-[40px] sm:text-[60px] lg:text-[80px] leading-[0.95] tracking-[-0.02em] text-balance">
                 Una llamada de <span className="font-display italic text-esmeralda-400">30 minutos</span>. Cero compromiso.
@@ -1297,7 +1540,7 @@ function CTA() {
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-7 text-[16.5px] sm:text-[18px] leading-relaxed text-paper-200 text-pretty max-w-[520px]">
-                Le enseñamos en vivo cómo se vería su web, le damos 3 ideas concretas para vender más esta misma semana — y si no le suena, nos despedimos como amigos.
+                Le enseñamos en vivo cómo se vería su web, le damos 3 ideas concretas para vender más esta misma semana, y si no le suena, nos despedimos como amigos.
               </p>
             </Reveal>
 
@@ -1327,7 +1570,7 @@ function CTA() {
                 </div>
                 <div>
                   <div className="text-paper-50">Su contacto directo</div>
-                  <div>iapymeconsultores@gmail.com — responde en menos de 24 horas</div>
+                  <div><a href={buildMailto('Hola iapymeconsultores')} className="text-esmeralda-400 hover:underline">iapymeconsultores@gmail.com</a>. Responde en menos de 24 horas</div>
                 </div>
               </div>
             </Reveal>
@@ -1373,9 +1616,9 @@ function CTA() {
                       {error && (
                         <div className="sm:col-span-2 text-[12.5px] text-terracota bg-terracota/10 border border-terracota/30 rounded-xl px-3 py-2">{error}</div>
                       )}
-                      <button type="submit" disabled={sending} className="sm:col-span-2 mt-1 inline-flex items-center justify-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 disabled:opacity-60 disabled:cursor-not-allowed text-ink-950 rounded-xl py-3.5 text-[14.5px] font-medium transition-colors">
-                        {sending ? 'Enviando…' : 'Agendar mi llamada'}
-                        {!sending && <LIcon name="ArrowRight" className="w-4 h-4" />}
+                      <button type="submit" className="sm:col-span-2 mt-1 inline-flex items-center justify-center gap-2 bg-esmeralda-500 hover:bg-esmeralda-400 text-ink-950 rounded-xl py-3.5 text-[14.5px] font-medium transition-colors">
+                        Enviar por correo
+                        <LIcon name="Mail" className="w-4 h-4" />
                       </button>
                       <div className="sm:col-span-2 flex items-center justify-center gap-1.5 text-[11.5px] text-ink-700/70">
                         <LIcon name="Lock" className="w-3 h-3" />
@@ -1388,9 +1631,10 @@ function CTA() {
                     <div className="mx-auto w-16 h-16 rounded-full bg-esmeralda-500/15 text-esmeralda-600 flex items-center justify-center">
                       <LIcon name="Check" className="w-8 h-8" strokeWidth={2.4} />
                     </div>
-                    <div className="mt-5 font-display text-[30px] leading-tight">¡Listo, {form.nombre.split(' ')[0]}!</div>
-                    <p className="mt-2 text-[14.5px] text-ink-700 max-w-[380px] mx-auto">
-                      Recibimos su solicitud. Le escribiremos a <span className="font-medium text-ink-900">{form.email}</span> dentro de las próximas 24 horas para agendar.
+                    <div className="mt-5 font-display text-[30px] leading-tight">¡Casi listo, {form.nombre.split(' ')[0]}!</div>
+                    <p className="mt-2 text-[14.5px] text-ink-700 max-w-[400px] mx-auto">
+                      Abrimos su correo con el mensaje ya redactado, solo tiene que pulsar <span className="font-medium text-ink-900">enviar</span>. Si no se abrió, escríbanos a{' '}
+                      <a href={buildMailto('Solicitud de consultoría')} className="font-medium text-esmeralda-700 underline">iapymeconsultores@gmail.com</a>.
                     </p>
                     <div className="mt-6 inline-flex items-center gap-2 bg-paper-100 rounded-full px-4 py-2 text-[12.5px] text-ink-700 font-mono">
                       <span className="relative flex h-2 w-2">
@@ -1419,7 +1663,7 @@ function Footer() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-12 sm:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
-            <BrandMark light />
+            <BrandLogo onDark imgClass="h-10 sm:h-12" />
             <p className="mt-5 text-[14px] text-paper-300 max-w-[360px] leading-relaxed text-pretty">
               Construimos motores de venta digitales para PyMEs mexicanas. Diseño que vende, tecnología que no estorba, acompañamiento de verdad.
             </p>
@@ -1439,6 +1683,7 @@ function Footer() {
               <li><a href="#metodo" className="hover:text-paper-50 transition-colors">Método</a></li>
               <li><a href="#muebleria" className="hover:text-paper-50 transition-colors">Ejemplo de proyecto</a></li>
               <li><a href="#inversion" className="hover:text-paper-50 transition-colors">Inversión y retorno</a></li>
+              <li><a href="#servicios" className="hover:text-paper-50 transition-colors">IA &amp; Innovación</a></li>
             </ul>
           </div>
         </div>
@@ -1460,10 +1705,12 @@ function App() {
       <Nav />
       <main>
         <Hero />
+        <ClientLogos />
         <Problema />
         <Metodo />
         <Muebleria />
         <ROI />
+        <MasServicios />
         <CTA />
       </main>
       <Footer />
